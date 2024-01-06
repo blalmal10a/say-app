@@ -31,8 +31,11 @@
       </q-list>
     </q-drawer>
 
-    <q-page-container>
+    <q-page-container style="overflow: hidden;">
+
+
       <RouterView />
+
     </q-page-container>
   </q-layout>
 </template>
@@ -46,4 +49,6 @@ const leftDrawerOpen = ref(false);
 onBeforeMount(() => {
   q.dark.set('auto')
 })
+
+
 </script>

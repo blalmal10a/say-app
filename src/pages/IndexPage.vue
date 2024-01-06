@@ -1,13 +1,9 @@
 <template>
-  <q-page class="flex flex-center">
+  <q-page padding>
     <!-- <q-btn
-      color="white"
-      text-color="black"
-      label="Standard"
       @click="login"
-    /> -->
-
-    <!--  -->
+      label="login"
+    ></q-btn> -->
   </q-page>
 </template>
 
@@ -21,9 +17,8 @@ const q = useQuasar()
 const router = useRouter()
 const route = useRoute()
 
-onMounted(() => {
 
-});
+
 
 async function login() {
   try {
@@ -54,5 +49,7 @@ async function getUser() {
 
   }
 }
+
+
 </script>
 
