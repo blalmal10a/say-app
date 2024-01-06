@@ -25,7 +25,7 @@
     >
       <q-list>
         <q-item-label header>
-          Essential Links
+          <!-- Essential Links -->
         </q-item-label>
         <!--  -->
       </q-list>

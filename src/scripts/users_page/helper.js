@@ -10,9 +10,40 @@ const users = reactive({
   },
   columns: userColumns(),
   getList: getList,
+  showAddEditForm: false,
+  form: initForm(),
+  reset: resetForm,
+  add: onSubmitForm,
+  loadingTable: false,
+  loadingSubmitButton: false,
 });
+async function onSubmitForm() {
+  users.loadingTable = true;
+  users.loadingSubmitButton = true;
 
+  try {
+    const res = await api.request({
+      url: users.form.id ? `users/${users.form.id}` : `users`,
+      method: users.form.id ? "patch" : "post",
+      data: {
+        ...users.form,
+      },
+      params: {
+        ...users.pagination,
+      },
+    });
+
+    users.list = res.data.data;
+    users.pagination.rowsNumber = res.data.total;
+    users.showAddEditForm = false;
+  } catch (error) {
+    console.error(error.message);
+  }
+  users.loadingTable = false;
+  users.loadingSubmitButton = false;
+}
 async function getList(props) {
+  users.loadingTable = true;
   try {
     if (props) {
       users.pagination = props.pagination;
@@ -26,6 +57,7 @@ async function getList(props) {
   } catch (error) {
     console.error(error.message);
   }
+  users.loadingTable = false;
 }
 function userColumns() {
   return [
@@ -42,8 +74,37 @@ function userColumns() {
       align: "left",
       field: (row) => row.phone,
     },
+
+    {
+      name: "actions",
+      label: "",
+    },
   ];
 }
+
+function initForm() {
+  return {
+    id: null,
+    name: "",
+    phone: "",
+    corp: null,
+  };
+}
+function resetForm() {
+  users.form = {
+    id: null,
+    name: "",
+    phone: "",
+    corp: null,
+  };
+}
+
+// function resetForm() {
+//   return {
+//     id: null,
+//     name: '',
+//   }
+// }
 
 // function userColumns() {
 //   return [
