@@ -1,1 +1,11 @@
 // app global css in SCSS form
+.custom-header {
+  min-height: 100px;
+  background: rgb(1, 41, 98);
+  background: linear-gradient(
+    180deg,
+    rgba(1, 41, 98, 1) 0%,
+    rgba(1, 41, 98, 1) 50%,
+    rgba(1, 41, 98, 0) 100%
+  );
+}

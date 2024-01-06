@@ -1,7 +1,11 @@
 <template>
   <q-layout view="lHh Lpr lFf">
-    <q-header elevated>
+    <!-- <q-header style="background: radial-gradient(100% 50% at bottom, transparent 50%, #012962 51%);height: 100px "> -->
+    <q-header class="custom-header">
       <q-toolbar>
+        <q-toolbar-title>
+          Salvation Army Youth
+        </q-toolbar-title>
         <q-btn
           flat
           dense
@@ -10,12 +14,6 @@
           aria-label="Menu"
           @click="leftDrawerOpen = !leftDrawerOpen"
         />
-
-        <q-toolbar-title>
-          Quasar App
-        </q-toolbar-title>
-
-        <div>Quasar v{{ $q.version }}</div>
       </q-toolbar>
     </q-header>
 
@@ -23,13 +21,12 @@
       v-model="leftDrawerOpen"
       show-if-above
       bordered
+      side="right"
     >
       <q-list>
         <q-item-label header>
           Essential Links
         </q-item-label>
-
-
         <!--  -->
       </q-list>
     </q-drawer>
@@ -40,7 +37,13 @@
   </q-layout>
 </template>
 <script setup>
-import { ref } from 'vue';
+import { useQuasar } from 'quasar';
+import { onBeforeMount, ref } from 'vue';
 
+const q = useQuasar()
 const leftDrawerOpen = ref(false);
+
+onBeforeMount(() => {
+  q.dark.set('auto')
+})
 </script>
