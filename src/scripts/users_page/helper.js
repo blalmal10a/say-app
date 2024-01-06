@@ -7,6 +7,7 @@ const users = reactive({
     rowsPerPage: 15,
     rowsNumber: 0,
     page: 0,
+    descending: true,
   },
   columns: userColumns(),
   getList: getList,

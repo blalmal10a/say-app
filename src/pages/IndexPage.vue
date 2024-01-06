@@ -1,9 +1,9 @@
 <template>
   <q-page padding>
-    <!-- <q-btn
+    <q-btn
       @click="login"
       label="login"
-    ></q-btn> -->
+    ></q-btn>
   </q-page>
 </template>
 
