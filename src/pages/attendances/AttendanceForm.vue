@@ -13,6 +13,7 @@
       :loading="attendances.loadingTable"
       :rows="attendances.users"
       :columns="attendances.form_columns"
+      :rows-per-page-options="[0]"
       hide-pagination
       class="full-width"
       v-model:selected="attendances.selectedList"
@@ -29,7 +30,7 @@
         </div>
         <div class="col-auto">
           <q-btn
-            @click="attendances.save($route.params.id, $router)"
+            @click="attendances.save($route, $router)"
             label="save"
             color="primary"
           ></q-btn>

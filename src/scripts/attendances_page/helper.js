@@ -4,9 +4,11 @@ import { api } from "src/boot/axios";
 import { reactive } from "vue";
 
 const attendances = reactive({
+  selecteDate: undefined,
   showAddEditForm: false,
   loadingTable: false,
   loadingSubmitButton: false,
+  is_executive: false,
   selectedTag: "Fellowship",
   list: [],
   users: [],
@@ -26,7 +28,9 @@ const attendances = reactive({
   reset: resetForm,
   save: onSubmitForm,
 });
-async function onSubmitForm(id, router) {
+async function onSubmitForm(route, router) {
+  let id = route.params.id;
+  let is_executive = route.query.executive ?? 0;
   attendances.loadingTable = true;
   attendances.loadingSubmitButton = true;
   try {
@@ -37,6 +41,7 @@ async function onSubmitForm(id, router) {
         attend_list: attendances.selectedList,
         tag: attendances.selectedTag,
         date: attendances.selecteDate,
+        is_executive: attendances.is_executive,
       },
       params: {
         ...attendances.pagination,
@@ -46,6 +51,9 @@ async function onSubmitForm(id, router) {
     attendances.list = res.data.data;
     attendances.pagination.rowsNumber = res.data.total;
     attendances.showAddEditForm = false;
+    router.push({
+      name: "attendances",
+    });
   } catch (error) {
     console.error(error.message);
     Notify.create(error.response?.data?.message ?? error?.message);
@@ -132,6 +140,8 @@ async function getUsersForAttendance(route) {
       `attendances/create?executive=${route.query.executive ?? 0}`
     );
     attendances.users = res.data ?? [];
+
+    attendances.is_executive = route.query.executive ? true : false;
   } catch (error) {
     console.error(error.message);
     Notify.create(error.response?.data?.message ?? error?.message);
@@ -142,6 +152,7 @@ async function getUsersForEditAttendance(id) {
     const res = await api.get(`attendances/${id}/edit`);
     attendances.users = res.data.users ?? [];
     attendances.selectedList = res.data.attend_list ?? [];
+    attendances.is_executive = res.data.is_executive;
   } catch (error) {
     console.error(error.message);
     Notify.create(error.response?.data?.message ?? error?.message);
