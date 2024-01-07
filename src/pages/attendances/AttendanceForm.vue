@@ -20,7 +20,12 @@
     >
       <template v-slot:top>
         <div class="col">
-          <h4 class="q-my-none">ATTENDANCE</h4>
+          <q-select
+            outlined
+            style="max-width: 189px;"
+            :options="['Monday', 'Fellowship', 'Others']"
+            v-model="attendances.selectedTag"
+          ></q-select>
         </div>
         <div class="col-auto">
           <q-btn
@@ -43,13 +48,19 @@ import { attendances } from 'src/scripts/attendances_page/helper';
 import { onBeforeMount, onBeforeUnmount, onMounted, ref } from 'vue';
 import ConfirmDelete from 'src/components/global/ConfirmDelete.vue';
 import { useHelper } from 'src/scripts/global/helper';
+import { date } from 'quasar';
 
 const tableRef = ref(null)
+onBeforeMount(() => {
 
-onMounted(async () => {
-  await attendances.create()
-  // await attendances.getList()
-})
+  const today = date.formatDate(new Date(), 'ddd')
+  if (today == 'Mon') attendances.selectedTag = 'Monday'
+
+}),
+  onMounted(async () => {
+    await attendances.create()
+    // await attendances.getList()
+  })
 
 function onRowClick(ev, data) {
   const selectedIndex = attendances.selectedList.findIndex(

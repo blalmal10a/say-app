@@ -7,6 +7,7 @@ const attendances = reactive({
   showAddEditForm: false,
   loadingTable: false,
   loadingSubmitButton: false,
+  selectedTag: "Fellowship",
   list: [],
   users: [],
   selectedList: [],
@@ -35,7 +36,7 @@ async function onSubmitForm() {
       method: attendances.form.id ? "patch" : "post",
       data: {
         attend_list: attendances.selectedList,
-        tag: attendances.tag,
+        tag: attendances.selectedTag,
         date: attendances.selecteDate,
       },
       params: {
