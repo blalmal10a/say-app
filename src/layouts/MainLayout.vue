@@ -27,7 +27,18 @@
         <q-item-label header>
           <!-- Essential Links -->
         </q-item-label>
-        <!--  -->
+        <q-item
+          v-for="(item, index) in routeList"
+          :key="index"
+          :active="$route.name == item.name"
+          :to="{
+            name: item.name
+          }"
+        >
+          <q-item-section>
+            {{ item.label }}
+          </q-item-section>
+        </q-item>
       </q-list>
     </q-drawer>
 
@@ -50,5 +61,19 @@ onBeforeMount(() => {
   q.dark.set('auto')
 })
 
+const routeList = [
+  {
+    label: 'Dashboard',
+    name: 'home'
+  },
+  {
+    label: 'Attendance',
+    name: 'attendances'
+  },
 
+  {
+    label: 'Members',
+    name: 'users'
+  },
+]
 </script>

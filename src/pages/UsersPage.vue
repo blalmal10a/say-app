@@ -85,12 +85,19 @@
 </template>
 <script setup>
 import { users } from 'src/scripts/users_page/helper';
-import { onMounted } from 'vue';
+import { onBeforeMount, onMounted, onUnmounted } from 'vue';
 import ConfirmDelete from 'src/components/global/ConfirmDelete.vue';
 import { useHelper } from 'src/scripts/global/helper';
 import UserForm from 'src/components/forms/UserForm.vue';
 
-onMounted(async () => {
-  await users.getList()
-})
+onUnmounted(() => {
+  users.list = []
+}),
+  onBeforeMount(() => {
+    users.list = []
+
+  }),
+  onMounted(async () => {
+    await users.getList()
+  })
 </script>

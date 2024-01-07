@@ -91,16 +91,21 @@
 </template>
 <script setup>
 import { attendances } from 'src/scripts/attendances_page/helper';
-import { onBeforeMount, onBeforeUnmount, onMounted, ref } from 'vue';
+import { onBeforeMount, onBeforeUnmount, onMounted, onUnmounted, ref } from 'vue';
 import ConfirmDelete from 'src/components/global/ConfirmDelete.vue';
 import { useHelper } from 'src/scripts/global/helper';
 
 const tableRef = ref(null)
+onUnmounted(() => {
+  attendances.list = []
+}), onBeforeMount(() => {
+  attendances.list = []
 
-onMounted(async () => {
+}),
+  onMounted(async () => {
 
-  await attendances.getList()
-})
+    await attendances.getList()
+  })
 
 function onRowClick(ev, data) {
   const selectedIndex = attendances.selectedList.findIndex(
