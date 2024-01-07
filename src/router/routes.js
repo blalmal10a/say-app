@@ -12,6 +12,23 @@ const routes = [
         path: "users",
         component: () => import("src/pages/UsersPage.vue"),
       },
+
+      {
+        name: "attendances",
+        path: "attendances",
+        component: () => import("src/pages/attendances/AttendancesPage.vue"),
+      },
+      {
+        name: "attendances-detail",
+        path: "attendances/:id",
+        component: () => import("src/pages/attendances/AttendancesPage.vue"),
+      },
+
+      {
+        name: "attendances-form",
+        path: "attendances/form/:id",
+        component: () => import("src/pages/attendances/AttendanceForm.vue"),
+      },
     ],
   },
 

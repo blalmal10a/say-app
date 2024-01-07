@@ -20,6 +20,7 @@
           <div class="row q-col-gutter-sm">
             <div class="col">
               <q-btn
+                v-close-popup
                 outline
                 class="full-width"
                 label="cancel"

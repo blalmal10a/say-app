@@ -1,0 +1,63 @@
+<template>
+  <q-page
+    class=""
+    padding
+  >
+    <q-table
+      ref="tableRef"
+      square
+      flat
+      bordered
+      selection="multiple"
+      @row-click="onRowClick"
+      :loading="attendances.loadingTable"
+      :rows="attendances.users"
+      :columns="attendances.form_columns"
+      hide-pagination
+      class="full-width"
+      v-model:selected="attendances.selectedList"
+      key="id"
+    >
+      <template v-slot:top>
+        <div class="col">
+          <h4 class="q-my-none">ATTENDANCE</h4>
+        </div>
+        <div class="col-auto">
+          <q-btn
+            @click="attendances.save"
+            label="save"
+            color="primary"
+          ></q-btn>
+        </div>
+      </template>
+    </q-table>
+
+    <confirm-delete @update-table="(data) => {
+      attendances.list = data.data
+      attendances.pagination.rowsNumber = data.total
+    }" />
+  </q-page>
+</template>
+<script setup>
+import { attendances } from 'src/scripts/attendances_page/helper';
+import { onBeforeMount, onBeforeUnmount, onMounted, ref } from 'vue';
+import ConfirmDelete from 'src/components/global/ConfirmDelete.vue';
+import { useHelper } from 'src/scripts/global/helper';
+
+const tableRef = ref(null)
+
+onMounted(async () => {
+  await attendances.create()
+  // await attendances.getList()
+})
+
+function onRowClick(ev, data) {
+  const selectedIndex = attendances.selectedList.findIndex(
+    (item) => item.id == data.id
+  )
+  if (selectedIndex >= 0)
+    attendances.selectedList.splice(selectedIndex, 1)
+  else
+    attendances.selectedList.push(data)
+}
+</script>

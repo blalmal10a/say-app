@@ -4,14 +4,14 @@
     padding
   >
     <q-table
-      :loading="users.loadingTable"
-      v-model:pagination="users.pagination"
-      @request="users.getList"
+      :loading="attendances.loadingTable"
+      v-model:pagination="attendances.pagination"
+      @request="attendances.getList"
       square
       flat
       bordered
-      :rows="users.list"
-      :columns="users.columns"
+      :rows="attendances.list"
+      :columns="attendances.columns"
       class="full-width"
     >
       <template v-slot:top>
@@ -24,8 +24,13 @@
               icon="add"
               title="Add User"
               @click="() => {
-                users.reset()
-                users.showAddEditForm = true
+                attendances.reset()
+                $router.push({
+                  name: 'attendances-form',
+                  params: {
+                    id: 'add',
+                  }
+                })
               }"
             ></q-btn>
           </div>
@@ -46,10 +51,10 @@
                 v-close-popup
                 round
                 @click="() => {
-                  users.form = {
+                  attendances.form = {
                     ...props.row
                   }
-                  users.showAddEditForm = true;
+                  attendances.showAddEditForm = true;
                 }"
                 color="accent"
                 size="12px"
@@ -62,9 +67,9 @@
                 @click="() => {
                   useHelper.tempData = { ...props.row }
                   useHelper.tempData.title = props.row.name;
-                  useHelper.tempData.endpoint = 'users'
+                  useHelper.tempData.endpoint = 'attendances'
                   useHelper.showConfirmDeleteDialog = true;
-                  useHelper.pagination = { ...users.pagination }
+                  useHelper.pagination = { ...attendances.pagination }
                 }"
                 color="negative"
                 size="12px"
@@ -76,21 +81,34 @@
       </template>
     </q-table>
 
-    <user-form />
+
+
     <confirm-delete @update-table="(data) => {
-      users.list = data.data
-      users.pagination.rowsNumber = data.total
+      attendances.list = data.data
+      attendances.pagination.rowsNumber = data.total
     }" />
   </q-page>
 </template>
 <script setup>
-import { users } from 'src/scripts/users_page/helper';
-import { onMounted } from 'vue';
+import { attendances } from 'src/scripts/attendances_page/helper';
+import { onBeforeMount, onBeforeUnmount, onMounted, ref } from 'vue';
 import ConfirmDelete from 'src/components/global/ConfirmDelete.vue';
 import { useHelper } from 'src/scripts/global/helper';
-import UserForm from 'src/components/forms/UserForm.vue';
+
+const tableRef = ref(null)
 
 onMounted(async () => {
-  await users.getList()
+
+  await attendances.getList()
 })
+
+function onRowClick(ev, data) {
+  const selectedIndex = attendances.selectedList.findIndex(
+    (item) => item.id == data.id
+  )
+  if (selectedIndex >= 0)
+    attendances.selectedList.splice(selectedIndex, 1)
+  else
+    attendances.selectedList.push(data)
+}
 </script>
