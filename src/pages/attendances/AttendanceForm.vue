@@ -8,6 +8,7 @@
       square
       flat
       bordered
+      :filter="attendances.pagination.filter"
       selection="multiple"
       @row-click="onRowClick"
       :loading="attendances.loadingTable"
@@ -20,20 +21,33 @@
       key="id"
     >
       <template v-slot:top>
-        <div class="col">
-          <q-select
-            outlined
-            style="max-width: 189px;"
-            :options="['Monday', 'Fellowship', 'Others']"
-            v-model="attendances.selectedTag"
-          ></q-select>
-        </div>
-        <div class="col-auto">
-          <q-btn
-            @click="attendances.save($route, $router)"
-            label="save"
-            color="primary"
-          ></q-btn>
+        <div class="full-width">
+          <div class="row q-col-gutter-sm">
+            <div class="col-12 col-sm-6 col-md-4">
+              <q-input
+                dense
+                outlined
+                v-model="attendances.pagination.filter"
+                label="Search"
+              />
+            </div>
+            <div class="col-12 col-sm-6 col-md-4">
+              <q-select
+                dense
+                outlined
+                :options="['Monday', 'Fellowship', 'Others']"
+                v-model="attendances.selectedTag"
+              ></q-select>
+            </div>
+            <div class="col-12 col-sm-6 col-md-4">
+              <q-btn
+                class="full-width"
+                @click="attendances.save($route, $router)"
+                label="save"
+                color="primary"
+              ></q-btn>
+            </div>
+          </div>
         </div>
       </template>
     </q-table>
