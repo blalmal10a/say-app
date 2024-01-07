@@ -4,28 +4,28 @@
     padding
   >
     <q-table
-      :loading="users.loadingTable"
-      v-model:pagination="users.pagination"
-      @request="users.getList"
+      :loading="designations.loadingTable"
+      v-model:pagination="designations.pagination"
+      @request="designations.getList"
       square
       flat
       bordered
-      :rows="users.list"
-      :columns="users.columns"
+      :rows="designations.list"
+      :columns="designations.columns"
       class="full-width"
     >
       <template v-slot:top>
         <div class="full-width row">
-          <div class="col"></div>
+          <div class="col">sdf</div>
           <div class=" col-auto">
             <q-btn
               rounded
               color="accent"
               icon="add"
-              title="Add User"
+              title="Add Designation"
               @click="() => {
-                users.reset()
-                users.showAddEditForm = true
+                designations.reset()
+                designations.showAddEditForm = true
               }"
             ></q-btn>
           </div>
@@ -46,10 +46,10 @@
                 v-close-popup
                 round
                 @click="() => {
-                  users.form = {
+                  designations.form = {
                     ...props.row
                   }
-                  users.showAddEditForm = true;
+                  designations.showAddEditForm = true;
                 }"
                 color="accent"
                 size="12px"
@@ -62,9 +62,9 @@
                 @click="() => {
                   useHelper.tempData = { ...props.row }
                   useHelper.tempData.title = props.row.name;
-                  useHelper.tempData.endpoint = 'users'
+                  useHelper.tempData.endpoint = 'designations'
                   useHelper.showConfirmDeleteDialog = true;
-                  useHelper.pagination = { ...users.pagination }
+                  useHelper.pagination = { ...designations.pagination }
                 }"
                 color="negative"
                 size="12px"
@@ -76,28 +76,28 @@
       </template>
     </q-table>
 
-    <user-form />
+    <designation-form />
     <confirm-delete @update-table="(data) => {
-      users.list = data.data
-      users.pagination.rowsNumber = data.total
+      designations.list = data.data
+      designations.pagination.rowsNumber = data.total
     }" />
   </q-page>
 </template>
 <script setup>
-import { users } from 'src/scripts/users_page/helper';
+import { designations } from 'src/scripts/designations_page/helper';
 import { onBeforeMount, onMounted, onUnmounted } from 'vue';
 import ConfirmDelete from 'src/components/global/ConfirmDelete.vue';
 import { useHelper } from 'src/scripts/global/helper';
-import UserForm from 'src/components/forms/UserForm.vue';
+import DesignationForm from 'src/components/forms/DesignationForm.vue';
 
 onUnmounted(() => {
-  users.list = []
+  designations.list = []
 }),
   onBeforeMount(() => {
-    users.list = []
+    designations.list = []
 
   }),
   onMounted(async () => {
-    await users.getList()
+    await designations.getList()
   })
 </script>

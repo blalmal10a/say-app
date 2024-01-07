@@ -2,15 +2,16 @@ import { Notify } from "quasar";
 import { api } from "src/boot/axios";
 import { reactive } from "vue";
 
-const users = reactive({
+const designations = reactive({
   list: [],
   pagination: {
     rowsPerPage: 15,
     rowsNumber: 0,
     page: 0,
-    descending: true,
+    descending: false,
+    orderBy: "order",
   },
-  columns: userColumns(),
+  columns: designationColumns(),
   getList: getList,
   showAddEditForm: false,
   form: initForm(),
@@ -20,50 +21,52 @@ const users = reactive({
   loadingSubmitButton: false,
 });
 async function onSubmitForm() {
-  users.loadingTable = true;
-  users.loadingSubmitButton = true;
+  designations.loadingTable = true;
+  designations.loadingSubmitButton = true;
 
   try {
     const res = await api.request({
-      url: users.form.id ? `users/${users.form.id}` : `users`,
-      method: users.form.id ? "patch" : "post",
+      url: designations.form.id
+        ? `designations/${designations.form.id}`
+        : `designations`,
+      method: designations.form.id ? "patch" : "post",
       data: {
-        ...users.form,
+        ...designations.form,
       },
       params: {
-        ...users.pagination,
+        ...designations.pagination,
       },
     });
 
-    users.list = res.data.data;
-    users.pagination.rowsNumber = res.data.total;
-    users.showAddEditForm = false;
+    designations.list = res.data.data;
+    designations.pagination.rowsNumber = res.data.total;
+    designations.showAddEditForm = false;
   } catch (error) {
     console.error(error.message);
     Notify.create(error.response?.data?.message ?? error?.message);
   }
-  users.loadingTable = false;
-  users.loadingSubmitButton = false;
+  designations.loadingTable = false;
+  designations.loadingSubmitButton = false;
 }
 async function getList(props) {
-  users.loadingTable = true;
+  designations.loadingTable = true;
   try {
     if (props) {
-      users.pagination = props.pagination;
+      designations.pagination = props.pagination;
     }
 
-    const res = await api.get("users", {
-      params: users.pagination,
+    const res = await api.get("designations", {
+      params: designations.pagination,
     });
-    users.list = res.data?.data ?? [];
-    users.pagination.rowsNumber = res.data?.total;
+    designations.list = res.data?.data ?? [];
+    designations.pagination.rowsNumber = res.data?.total;
   } catch (error) {
     console.error(error.message);
     Notify.create(error.response?.data?.message ?? error?.message);
   }
-  users.loadingTable = false;
+  designations.loadingTable = false;
 }
-function userColumns() {
+function designationColumns() {
   return [
     {
       name: "name",
@@ -72,12 +75,12 @@ function userColumns() {
       field: (row) => row.name,
     },
 
-    {
-      name: "phone",
-      label: "phone",
-      align: "left",
-      field: (row) => row.phone,
-    },
+    // {
+    //   name: "phone",
+    //   label: "phone",
+    //   align: "left",
+    //   field: (row) => row.phone,
+    // },
 
     {
       name: "actions",
@@ -92,11 +95,10 @@ function initForm() {
     name: "",
     phone: "",
     corp: null,
-    designations: [],
   };
 }
 function resetForm() {
-  users.form = {
+  designations.form = {
     id: null,
     name: "",
     phone: "",
@@ -111,7 +113,7 @@ function resetForm() {
 //   }
 // }
 
-// function userColumns() {
+// function designationColumns() {
 //   return [
 //     {
 //       name: "first",
@@ -122,4 +124,4 @@ function resetForm() {
 //   ];
 // }
 
-export { users };
+export { designations };

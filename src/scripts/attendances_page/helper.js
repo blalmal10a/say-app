@@ -126,9 +126,11 @@ function resetForm() {
     corp: null,
   };
 }
-async function getUsersForAttendance(id) {
+async function getUsersForAttendance(route) {
   try {
-    const res = await api.get(`attendances/create`);
+    const res = await api.get(
+      `attendances/create?executive=${route.query.executive ?? 0}`
+    );
     attendances.users = res.data ?? [];
   } catch (error) {
     console.error(error.message);

@@ -62,9 +62,9 @@ onBeforeMount(() => {
 }),
   onMounted(async () => {
     if (route.params.id == 'add')
-      await attendances.create()
+      await attendances.create(route)
     else
-      await attendances.update(route.params.id)
+      await attendances.update(route.params.id, route)
 
     // await attendances.getList()
   })

@@ -92,7 +92,7 @@
                 round
                 @click="() => {
                   useHelper.tempData = { ...props.row }
-                  useHelper.tempData.title = props.row.name;
+                  useHelper.tempData.title = `attendence on ${props.row.date}`;
                   useHelper.tempData.endpoint = 'attendances'
                   useHelper.showConfirmDeleteDialog = true;
                   useHelper.pagination = { ...attendances.pagination }

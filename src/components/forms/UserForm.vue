@@ -20,6 +20,7 @@
       <q-card-section>
         <q-form @submit="users.add">
           <q-input
+            autofocus
             v-model="users.form.name"
             type="text"
             label="Name"
@@ -31,19 +32,21 @@
             label="Phone"
             :rules="[val => !!val || 'Phone is required']"
           />
-          <!-- <q-select
-            v-model="users.form.designation_id"
+
+          <q-select
             outlined
-            :options="[
-              'Leader',
-              'Asst. Leader',
-              'Secretary',
-              'Asst. Secretary',
-              'Member',
-            ]"
+            emit-value
+            map-options
+            multiple
+            v-model="users.form.designations"
+            :options="designations.list"
             label="Designation"
             hint=""
-          ></q-select> -->
+            option-label="name"
+            option-value="id"
+          ></q-select>
+
+
           <!-- <q-input
           v-model="users.form.house_no"
           type="text"
@@ -65,4 +68,9 @@
 
 <script setup>
 import { users } from 'src/scripts/users_page/helper';
+import { designations } from 'src/scripts/designations_page/helper';
+import { onMounted } from 'vue';
+onMounted(() => {
+  designations.getList();
+})
 </script>

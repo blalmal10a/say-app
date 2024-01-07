@@ -75,5 +75,10 @@ const routeList = [
     label: 'Members',
     name: 'users'
   },
+
+  {
+    label: 'Designations',
+    name: 'designation'
+  },
 ]
 </script>
