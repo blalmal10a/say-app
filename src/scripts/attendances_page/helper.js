@@ -1,4 +1,5 @@
 import { date } from "quasar";
+import { Notify } from "quasar";
 import { api } from "src/boot/axios";
 import { reactive } from "vue";
 
@@ -47,6 +48,7 @@ async function onSubmitForm() {
     attendances.showAddEditForm = false;
   } catch (error) {
     console.error(error.message);
+    Notify.create(error.response?.data?.message ?? error?.message);
   }
   attendances.loadingTable = false;
   attendances.loadingSubmitButton = false;
@@ -65,6 +67,7 @@ async function getList(props) {
     attendances.pagination.rowsNumber = res.data?.total;
   } catch (error) {
     console.error(error.message);
+    Notify.create(error.response?.data?.message ?? error?.message);
   }
   attendances.loadingTable = false;
 }
@@ -129,6 +132,7 @@ async function getUsersForAttendance() {
     attendances.users = res.data ?? [];
   } catch (error) {
     console.error(error.message);
+    Notify.create(error.response?.data?.message ?? error?.message);
   }
 }
 // function resetForm() {

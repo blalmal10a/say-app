@@ -57,7 +57,7 @@ async function onSubmitConfirmDelete() {
     emit('update-table', data)
     loadingConfirmDelete = false;
   } catch (error) {
-    console.error(error.message);
+    console.log('error: ', error.message)
 
   }
 }

@@ -30,7 +30,7 @@ async function login() {
     localStorage.setItem('token', res.data?.token)
     console.log(res.data)
   } catch (error) {
-    console.error(error.message);
+    console.log('error: ', error.message)
   }
 }
 onMounted(() => {

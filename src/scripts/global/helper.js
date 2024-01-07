@@ -1,3 +1,4 @@
+import { Notify } from "quasar";
 import { api } from "src/boot/axios";
 import { reactive } from "vue";
 
@@ -29,6 +30,7 @@ async function onConfirmDelete() {
     return res.data;
   } catch (error) {
     console.error(error.message);
+    Notify.create(error.response?.data?.message ?? error?.message);
   }
   useHelper.loadingConfirmDelete = false;
 }

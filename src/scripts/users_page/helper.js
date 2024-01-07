@@ -1,3 +1,4 @@
+import { Notify } from "quasar";
 import { api } from "src/boot/axios";
 import { reactive } from "vue";
 
@@ -39,6 +40,7 @@ async function onSubmitForm() {
     users.showAddEditForm = false;
   } catch (error) {
     console.error(error.message);
+    Notify.create(error.response?.data?.message ?? error?.message);
   }
   users.loadingTable = false;
   users.loadingSubmitButton = false;
@@ -57,6 +59,7 @@ async function getList(props) {
     users.pagination.rowsNumber = res.data?.total;
   } catch (error) {
     console.error(error.message);
+    Notify.create(error.response?.data?.message ?? error?.message);
   }
   users.loadingTable = false;
 }
