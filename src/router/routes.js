@@ -36,6 +36,29 @@ const routes = [
         path: "attendances/form/:id",
         component: () => import("src/pages/attendances/AttendanceForm.vue"),
       },
+
+      // faith promise start
+
+      {
+        name: "faith-promises",
+        path: "faith-promises",
+        component: () =>
+          import("src/pages/faith_promises/FaithPromisePage.vue"),
+      },
+      {
+        name: "faith-promises-detail",
+        path: "faith-promises/:id",
+        component: () =>
+          import("src/pages/faith_promises/FaithPromisePage.vue"),
+      },
+
+      {
+        name: "faith-promise-form",
+        path: "faith-promises/form/:id",
+        component: () =>
+          import("src/pages/faith_promises/FaithPromiseForm.vue"),
+      },
+      // faith promise end
     ],
   },
 

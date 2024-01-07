@@ -70,6 +70,10 @@ const routeList = [
     label: 'Attendance',
     name: 'attendances'
   },
+  {
+    label: 'Faith Promise',
+    name: 'faith-promises'
+  },
 
   {
     label: 'Members',
