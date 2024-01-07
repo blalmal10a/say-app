@@ -29,7 +29,7 @@
         </div>
         <div class="col-auto">
           <q-btn
-            @click="attendances.save"
+            @click="attendances.save($route.params.id, $router)"
             label="save"
             color="primary"
           ></q-btn>
@@ -49,16 +49,23 @@ import { onBeforeMount, onBeforeUnmount, onMounted, ref } from 'vue';
 import ConfirmDelete from 'src/components/global/ConfirmDelete.vue';
 import { useHelper } from 'src/scripts/global/helper';
 import { date } from 'quasar';
+import { useRoute } from 'vue-router';
 
+const route = useRoute()
 const tableRef = ref(null)
 onBeforeMount(() => {
-
+  attendances.users = [];
+  attendances.selectedList = [];
   const today = date.formatDate(new Date(), 'ddd')
   if (today == 'Mon') attendances.selectedTag = 'Monday'
 
 }),
   onMounted(async () => {
-    await attendances.create()
+    if (route.params.id == 'add')
+      await attendances.create()
+    else
+      await attendances.update(route.params.id)
+
     // await attendances.getList()
   })
 

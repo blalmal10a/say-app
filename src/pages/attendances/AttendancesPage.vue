@@ -15,24 +15,46 @@
       class="full-width"
     >
       <template v-slot:top>
-        <div class="full-width row">
-          <div class="col">sdf</div>
-          <div class=" col-auto">
-            <q-btn
-              rounded
-              color="accent"
-              icon="add"
-              title="Add User"
-              @click="() => {
-                attendances.reset()
-                $router.push({
-                  name: 'attendances-form',
-                  params: {
-                    id: 'add',
-                  }
-                })
-              }"
-            ></q-btn>
+        <div class="full-width">
+          <div class=" row q-col-gutter-sm">
+            <div class="col"></div>
+            <div class=" col-auto">
+              <q-btn
+                rounded
+                color="accent"
+                icon="add"
+                title="Add Attendance"
+                @click="() => {
+                  attendances.reset()
+                  $router.push({
+                    name: 'attendance-form',
+                    params: {
+                      id: 'add',
+                    }
+                  })
+                }"
+              ></q-btn>
+            </div>
+            <div class=" col-auto">
+              <q-btn
+                rounded
+                color="accent"
+                icon="new_label"
+                title="Executive Attendance"
+                @click="() => {
+                  attendances.reset()
+                  $router.push({
+                    name: 'attendance-form',
+                    params: {
+                      id: 'add',
+                    },
+                    query: {
+                      executive: 1
+                    }
+                  })
+                }"
+              ></q-btn>
+            </div>
           </div>
         </div>
 
@@ -51,9 +73,13 @@
                 v-close-popup
                 round
                 @click="() => {
-                  attendances.form = {
-                    ...props.row
-                  }
+                  $router.push({
+                    name: 'attendance-form',
+                    params: {
+                      id: props.row.id
+                    }
+                  })
+
                   attendances.showAddEditForm = true;
                 }"
                 color="accent"

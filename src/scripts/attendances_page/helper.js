@@ -21,19 +21,18 @@ const attendances = reactive({
   form_columns: attendanceFormColumns(),
   form: initForm(),
   create: getUsersForAttendance,
+  update: getUsersForEditAttendance,
   getList: getList,
   reset: resetForm,
   save: onSubmitForm,
 });
-async function onSubmitForm() {
+async function onSubmitForm(id, router) {
   attendances.loadingTable = true;
   attendances.loadingSubmitButton = true;
   try {
     const res = await api.request({
-      url: attendances.form.id
-        ? `attendances/${attendances.form.id}`
-        : `attendances`,
-      method: attendances.form.id ? "patch" : "post",
+      url: id != "add" ? `attendances/${id}` : `attendances`,
+      method: id != "add" ? "patch" : "post",
       data: {
         attend_list: attendances.selectedList,
         tag: attendances.selectedTag,
@@ -127,10 +126,20 @@ function resetForm() {
     corp: null,
   };
 }
-async function getUsersForAttendance() {
+async function getUsersForAttendance(id) {
   try {
-    const res = await api.get("attendances/create");
+    const res = await api.get(`attendances/create`);
     attendances.users = res.data ?? [];
+  } catch (error) {
+    console.error(error.message);
+    Notify.create(error.response?.data?.message ?? error?.message);
+  }
+}
+async function getUsersForEditAttendance(id) {
+  try {
+    const res = await api.get(`attendances/${id}/edit`);
+    attendances.users = res.data.users ?? [];
+    attendances.selectedList = res.data.attend_list ?? [];
   } catch (error) {
     console.error(error.message);
     Notify.create(error.response?.data?.message ?? error?.message);

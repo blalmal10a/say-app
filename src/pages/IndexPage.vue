@@ -44,7 +44,7 @@ async function getUser() {
         Authorization: `Bearer ${token}`
       }
     })
-    console.log('res: ', res.data)
+
   } catch (error) {
 
   }

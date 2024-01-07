@@ -26,7 +26,7 @@ const routes = [
       },
 
       {
-        name: "attendances-form",
+        name: "attendance-form",
         path: "attendances/form/:id",
         component: () => import("src/pages/attendances/AttendanceForm.vue"),
       },
