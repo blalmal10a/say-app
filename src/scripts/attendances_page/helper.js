@@ -9,7 +9,7 @@ const attendances = reactive({
   loadingTable: false,
   loadingSubmitButton: false,
   is_executive: false,
-  selectedTag: "Fellowship",
+  selectedTag: "Meeting",
   list: [],
   users: [],
   selectedList: [],
@@ -18,6 +18,7 @@ const attendances = reactive({
     rowsPerPage: 15,
     rowsNumber: 0,
     page: 0,
+    is_executive: false,
   },
   columns: attendanceColumns(),
   form_columns: attendanceFormColumns(),
@@ -51,6 +52,7 @@ async function onSubmitForm(route, router) {
     attendances.list = res.data.data;
     attendances.pagination.rowsNumber = res.data.total;
     attendances.showAddEditForm = false;
+    attendances.pagination.is_executive = attendances.is_executive;
     router.push({
       name: "attendances",
     });
@@ -85,14 +87,21 @@ function attendanceColumns() {
       label: "Date",
       name: "date",
       align: "left",
-      field: (row) => row.date,
+      field: (row) => date.formatDate(row.date, "Do MMM, 'YY"),
     },
+
     {
-      label: "tag",
-      name: "tag",
+      label: "Att.",
+      name: "no_of_attendant",
       align: "left",
-      field: (row) => row.tag ?? "N/A",
+      field: (row) => row.no_of_attendant ?? "N/A",
     },
+    // {
+    //   label: "tag",
+    //   name: "tag",
+    //   align: "left",
+    //   field: (row) => row.tag ?? "N/A",
+    // },
 
     {
       name: "actions",

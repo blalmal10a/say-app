@@ -35,7 +35,7 @@
               <q-select
                 dense
                 outlined
-                :options="['Monday', 'Fellowship', 'Others']"
+                :options="tagOptions"
                 v-model="attendances.selectedTag"
               ></q-select>
             </div>
@@ -60,14 +60,29 @@
 </template>
 <script setup>
 import { attendances } from 'src/scripts/attendances_page/helper';
-import { onBeforeMount, onBeforeUnmount, onMounted, ref } from 'vue';
+import { computed, onBeforeMount, onBeforeUnmount, onMounted, ref } from 'vue';
 import ConfirmDelete from 'src/components/global/ConfirmDelete.vue';
 import { useHelper } from 'src/scripts/global/helper';
 import { date } from 'quasar';
 import { useRoute } from 'vue-router';
 
 const route = useRoute()
+
 const tableRef = ref(null)
+const tagOptions = computed(() => {
+  if (attendances.is_executive) {
+    attendances.selectedTag = 'Council';
+    return [
+      'Council',
+      'Activity'
+    ]
+  }
+  attendances.selectedTag = 'Meeting';
+  return [
+    'Meeting',
+    'Activity',
+  ]
+})
 onBeforeMount(() => {
   attendances.users = [];
   attendances.selectedList = [];
