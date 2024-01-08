@@ -1,39 +1,58 @@
 const routes = [
   {
     path: "/",
+
     component: () => import("layouts/MainLayout.vue"),
     children: [
       {
         name: "home",
         path: "",
+        meta: {
+          requires_auth: false,
+        },
         component: () => import("src/pages/IndexPage.vue"),
       },
       {
         name: "users",
         path: "users",
+        meta: {
+          requires_auth: true,
+        },
         component: () => import("src/pages/UsersPage.vue"),
       },
 
       {
         name: "designation",
         path: "designation",
+        meta: {
+          requires_auth: true,
+        },
         component: () => import("src/pages/DesignationPage.vue"),
       },
 
       {
         name: "attendances",
         path: "attendances",
+        meta: {
+          requires_auth: true,
+        },
         component: () => import("src/pages/attendances/AttendancesPage.vue"),
       },
       {
         name: "attendances-detail",
         path: "attendances/:id",
+        meta: {
+          requires_auth: true,
+        },
         component: () => import("src/pages/attendances/AttendancesPage.vue"),
       },
 
       {
         name: "attendance-form",
         path: "attendances/form/:id",
+        meta: {
+          requires_auth: true,
+        },
         component: () => import("src/pages/attendances/AttendanceForm.vue"),
       },
 
@@ -42,12 +61,18 @@ const routes = [
       {
         name: "faith-promises",
         path: "faith-promises",
+        meta: {
+          requires_auth: true,
+        },
         component: () =>
           import("src/pages/faith_promises/FaithPromisePage.vue"),
       },
       {
         name: "faith-promises-detail",
         path: "faith-promises/:id",
+        meta: {
+          requires_auth: true,
+        },
         component: () =>
           import("src/pages/faith_promises/FaithPromisePage.vue"),
       },
@@ -55,8 +80,20 @@ const routes = [
       {
         name: "faith-promise-form",
         path: "faith-promises/form/:id",
+        meta: {
+          requires_auth: true,
+        },
         component: () =>
           import("src/pages/faith_promises/FaithPromiseForm.vue"),
+      },
+
+      {
+        name: "login",
+        path: "/auth/login",
+        meta: {
+          requires_auth: false,
+        },
+        component: () => import("src/pages/auth/LoginPage.vue"),
       },
       // faith promise end
     ],
@@ -66,6 +103,9 @@ const routes = [
   // but you can also remove it
   {
     path: "/:catchAll(.*)*",
+    meta: {
+      requires_auth: true,
+    },
     component: () => import("pages/ErrorNotFound.vue"),
   },
 ];

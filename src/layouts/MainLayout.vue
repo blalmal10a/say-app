@@ -13,11 +13,21 @@
           icon="menu"
           aria-label="Menu"
           @click="leftDrawerOpen = !leftDrawerOpen"
+          v-if="$route.meta?.requires_auth || auth.user?.id"
         />
+        <q-btn
+          flat
+          :to="{
+            name: 'login'
+          }"
+          v-if="$route.name == 'home' && !auth.user?.id"
+          label="Login"
+        ></q-btn>
       </q-toolbar>
     </q-header>
 
     <q-drawer
+      v-if="$route.meta?.requires_auth || auth.user?.id"
       v-model="leftDrawerOpen"
       show-if-above
       bordered
@@ -52,6 +62,7 @@
 </template>
 <script setup>
 import { useQuasar } from 'quasar';
+import { auth } from 'src/scripts/global/auth';
 import { onBeforeMount, ref } from 'vue';
 
 const q = useQuasar()
