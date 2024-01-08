@@ -75,7 +75,7 @@
                 @click="() => {
                   useHelper.tempData = { ...props.row }
                   useHelper.tempData.title = `attendence on ${props.row.date}`;
-                  useHelper.tempData.endpoint = 'faith_promises'
+                  useHelper.tempData.endpoint = 'faith-promises'
                   useHelper.showConfirmDeleteDialog = true;
                   useHelper.pagination = { ...faith_promises.pagination }
                 }"
