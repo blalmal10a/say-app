@@ -44,6 +44,7 @@
           :to="{
             name: item.name
           }"
+          @click="leftDrawerOpen = false"
         >
           <q-item-section>
             {{ item.label }}
@@ -63,14 +64,19 @@
 <script setup>
 import { useQuasar } from 'quasar';
 import { auth } from 'src/scripts/global/auth';
-import { onBeforeMount, ref } from 'vue';
+import { useHelper } from 'src/scripts/global/helper';
+import { onBeforeMount, onMounted, ref } from 'vue';
 
 const q = useQuasar()
 const leftDrawerOpen = ref(false);
-
-onBeforeMount(() => {
-  q.dark.set('auto')
-})
+onMounted(() => {
+  const wrapper = document.getElementById('wrapper')
+  useHelper.wrapper = wrapper;
+  console.log('wrapper in main layout', wrapper.style.display = 'none')
+}),
+  onBeforeMount(() => {
+    q.dark.set('auto')
+  })
 
 const routeList = [
   {

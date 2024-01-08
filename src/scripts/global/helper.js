@@ -13,6 +13,7 @@ const useHelper = reactive({
   deleteResponse: {},
   pagination: {},
   onConfirmDelete: onConfirmDelete,
+  wrapper: null,
 });
 
 async function onConfirmDelete() {

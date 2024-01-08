@@ -7,6 +7,7 @@ import {
 } from "vue-router";
 import routes from "./routes";
 import { auth } from "src/scripts/global/auth";
+import { useHelper } from "src/scripts/global/helper";
 
 /*
  * If not building with SSR mode, you can
@@ -33,21 +34,21 @@ export default route(function (/* { store, ssrContext } */) {
     // quasar.conf.js -> build -> publicPath
     history: createHistory(process.env.VUE_ROUTER_BASE),
   });
-
+  let wrapper = null;
   Router.beforeEach(async (to, from, next) => {
+    if (useHelper.wrapper) {
+      useHelper.wrapper.style.display = "flex";
+    }
+
     const token = localStorage.getItem("token");
     if (to.meta.requires_auth || token) {
-      if (auth.user?.id) {
+      if (auth.user?.id && false) {
         // authenticated
         authenticated(to, next);
-        return;
       } else {
         await auth.getUser();
         if (auth.user.id) {
-          //authenticated
           authenticated(to, next);
-
-          // next();
         } else {
           localStorage.removeItem("token");
           next({ name: "login" });
@@ -58,6 +59,8 @@ export default route(function (/* { store, ssrContext } */) {
     } else {
       next();
     }
+
+    useHelper.wrapper.style.display = "none";
   });
 
   return Router;
@@ -65,11 +68,9 @@ export default route(function (/* { store, ssrContext } */) {
 
 function authenticated(to, next) {
   if (to.name == "login") {
-    console.log("if name ogin");
     next({ name: "home" });
     return;
   } else {
-    console.log("name is notlogin");
     next();
   }
 }
