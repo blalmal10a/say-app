@@ -30,6 +30,7 @@ const faith_promises = reactive({
 });
 async function onSubmitForm(route, router) {
   let id = route.params.id;
+
   let is_executive = route.query.executive ?? 0;
   faith_promises.loadingTable = true;
   faith_promises.loadingSubmitButton = true;
@@ -48,9 +49,9 @@ async function onSubmitForm(route, router) {
     faith_promises.list = res.data.data;
     faith_promises.pagination.rowsNumber = res.data.total;
     faith_promises.showAddEditForm = false;
-    // router.push({
-    //   name: "faith-promises",
-    // });
+    router.push({
+      name: "faith-promises",
+    });
   } catch (error) {
     console.error(error.message);
     Notify.create(error.response?.data?.message ?? error?.message);
@@ -104,7 +105,7 @@ function faith_promiseFormColumns() {
       label: "name",
       name: "name",
       align: "left",
-      field: (row) => row.name,
+      field: (row) => row.name ?? row.user?.name,
     },
     {
       label: "Amount",
@@ -145,9 +146,13 @@ async function getUsersForFaithPromise(route) {
 async function getUsersForEditFaithPromise(id) {
   try {
     const res = await api.get(`faith-promises/${id}/edit`);
-    faith_promises.users = res.data.users ?? [];
-    faith_promises.selectedList = res.data.attend_list ?? [];
-    faith_promises.is_executive = res.data.is_executive;
+
+    faith_promises.users = res.data ?? [];
+
+    // faith_promises.is_executive = route.query.executive ? true : false;
+    // faith_promises.users = res.data.users ?? [];
+    // faith_promises.selectedList = res.data.attend_list ?? [];
+    // faith_promises.is_executive = res.data.is_executive;
   } catch (error) {
     console.error(error.message);
     Notify.create(error.response?.data?.message ?? error?.message);
