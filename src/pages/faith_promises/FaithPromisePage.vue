@@ -35,8 +35,6 @@
                 }"
               ></q-btn>
             </div>
-
-
           </div>
         </div>
 
@@ -46,10 +44,8 @@
           auto-width
           :props="props"
         >
-          <div
-            class="row q-col-gutter-sm"
-            style="min-width: 100px;"
-          >
+          <div class="row q-col-gutter-sm">
+            <!-- style="min-width: 100px;" -->
             <div class="col-auto">
               <q-btn
                 v-close-popup
@@ -69,7 +65,10 @@
                 icon="edit"
               ></q-btn>
             </div>
-            <div class="col-auto">
+            <div
+              class="col-auto"
+              v-if="false"
+            >
               <q-btn
                 round
                 @click="() => {

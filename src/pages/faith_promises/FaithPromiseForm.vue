@@ -3,7 +3,6 @@
     class=""
     padding
   >
-
     <q-table
       ref="tableRef"
       square
@@ -30,12 +29,26 @@
               />
             </div>
             <div class="col-12 col-sm-6 col-md-4">
-              <q-select
-                dense
-                outlined
-                :options="['Monday', 'Fellowship', 'Others']"
-                v-model="faith_promises.selectedTag"
-              ></q-select>
+              <q-btn
+                outline
+                color="white"
+                class="full-width"
+              >
+                {{ date.formatDate(faith_promises.selecteDate, 'MMMM') }}
+                <q-popup-proxy v-model="faith_promises.dateMenu">
+                  <q-date
+                    v-model="faith_promises.selecteDate"
+                    default-view="Months"
+                    mask="YYYY-MM-DD"
+                    @navigation="(ev) => {
+                      faith_promises.selecteDate = `${ev.year}-${ev.month < 10 ? `0${ev.month}` : ev.month}-01`
+                      faith_promises.dateMenu = false;
+                    }"
+                  >
+                  </q-date>
+                </q-popup-proxy>
+              </q-btn>
+
             </div>
             <div class="col-12 col-sm-6 col-md-4">
               <q-btn
@@ -54,6 +67,7 @@
           :props="props"
         >
           <q-input
+            type="number"
             dense
             style="min-width: max(100px, 30vw)"
             v-model="props.row.amount"
@@ -89,8 +103,10 @@ onBeforeMount(() => {
 
 }),
   onMounted(async () => {
-    if (route.params.id == 'add')
+    if (route.params.id == 'add') {
+      faith_promises.selecteDate = date.formatDate(new Date().setDate(1), 'YYYY-MM-DD');
       await faith_promises.create(route)
+    }
     else
       await faith_promises.update(route.params.id, route)
 

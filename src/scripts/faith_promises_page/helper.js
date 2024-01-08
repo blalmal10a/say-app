@@ -40,6 +40,7 @@ async function onSubmitForm(route, router) {
       method: id != "add" ? "patch" : "post",
       data: {
         faith_promise_data: faith_promises.users,
+        month: faith_promises.selecteDate,
       },
       params: {
         ...faith_promises.pagination,
@@ -89,7 +90,7 @@ function faith_promiseColumns() {
       label: "Amount",
       name: "amount",
       align: "left",
-      field: (row) => row.amount,
+      field: (row) => row.total_amount,
     },
 
     {
@@ -145,15 +146,19 @@ async function getUsersForFaithPromise(route) {
 }
 async function getUsersForEditFaithPromise(id) {
   try {
+    faith_promises.loadingTable = true;
     const res = await api.get(`faith-promises/${id}/edit`);
 
-    faith_promises.users = res.data ?? [];
+    faith_promises.users = res.data.details ?? [];
 
     // faith_promises.is_executive = route.query.executive ? true : false;
     // faith_promises.users = res.data.users ?? [];
     // faith_promises.selectedList = res.data.attend_list ?? [];
     // faith_promises.is_executive = res.data.is_executive;
+    faith_promises.selecteDate = res.data.month;
+    faith_promises.loadingTable = false;
   } catch (error) {
+    faith_promises.loadingTable = false;
     console.error(error.message);
     Notify.create(error.response?.data?.message ?? error?.message);
   }
