@@ -25,10 +25,42 @@ const attendances = reactive({
   form: initForm(),
   create: getUsersForAttendance,
   update: getUsersForEditAttendance,
+  show: show,
+  update_collection: updateCollection,
   getList: getList,
   reset: resetForm,
   save: onSubmitForm,
 });
+
+async function show(route, router) {
+  try {
+    attendances.loadingTable = true;
+    const res = await api.get(`attendances/${route.params.id}`);
+    attendances.form = res.data;
+    console.log(res.data);
+    attendances.users = res.data.users ?? [];
+    attendances.is_executive = route.query.executive ? true : false;
+    attendances.loadingTable = false;
+  } catch (error) {
+    attendances.loadingTable = false;
+    Notify.create(error.response?.data?.message ?? error?.message);
+  }
+}
+
+async function updateCollection(route, router) {
+  try {
+    attendances.loadingSubmitButton = true;
+    const res = await api.patch(`attendances/${route.params.id}/collection`, {
+      collection: parseFloat(attendances.collection),
+    });
+    attendances.loadingSubmitButton = false;
+    router.push({ name: "attendances" });
+  } catch (error) {
+    attendances.loadingSubmitButton = false;
+    Notify.create(error.response?.data?.message ?? error.message);
+  }
+}
+
 async function onSubmitForm(route, router) {
   let id = route.params.id;
   let is_executive = route.query.executive ?? 0;
@@ -145,24 +177,30 @@ function resetForm() {
 }
 async function getUsersForAttendance(route) {
   try {
+    attendances.loadingTable = true;
     const res = await api.get(
       `attendances/create?executive=${route.query.executive ?? 0}`
     );
     attendances.users = res.data ?? [];
 
     attendances.is_executive = route.query.executive ? true : false;
+    attendances.loadingTable = false;
   } catch (error) {
+    attendances.loadingTable = false;
     console.error(error.message);
     Notify.create(error.response?.data?.message ?? error?.message);
   }
 }
 async function getUsersForEditAttendance(id) {
   try {
+    attendances.loadingTable = true;
     const res = await api.get(`attendances/${id}/edit`);
     attendances.users = res.data.users ?? [];
     attendances.selectedList = res.data.attend_list ?? [];
     attendances.is_executive = res.data.is_executive;
+    attendances.loadingTable = false;
   } catch (error) {
+    attendances.loadingTable = false;
     console.error(error.message);
     Notify.create(error.response?.data?.message ?? error?.message);
   }
