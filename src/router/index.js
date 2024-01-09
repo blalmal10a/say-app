@@ -55,7 +55,7 @@ export default route(function (/* { store, ssrContext } */) {
         }
       }
 
-      next();
+      // next();
     } else {
       next();
     }
