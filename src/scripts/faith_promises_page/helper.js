@@ -133,13 +133,16 @@ function resetForm() {
 }
 async function getUsersForFaithPromise(route) {
   try {
+    faith_promises.loadingTable = true;
     const res = await api.get(
       `faith-promises/create?executive=${route.query.executive ?? 0}`
     );
     faith_promises.users = res.data ?? [];
 
     faith_promises.is_executive = route.query.executive ? true : false;
+    faith_promises.loadingTable = false;
   } catch (error) {
+    faith_promises.loadingTable = false;
     console.error(error.message);
     Notify.create(error.response?.data?.message ?? error?.message);
   }
