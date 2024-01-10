@@ -6,7 +6,7 @@
     <q-card style="min-width: min(400px, 100vw);">
       <q-toolbar class="bg-primary text-white">
         <q-toolbar-title class="row">
-          <div class="col">{{ designations.form?.id ? 'Edit' : 'Add' }} Designation</div>
+          <div class="col">{{ designations.form?._id ? 'Edit' : 'Add' }} Designation</div>
           <div class="col-auto">
             <q-btn
               v-close-popup

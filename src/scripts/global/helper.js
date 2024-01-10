@@ -20,7 +20,7 @@ async function onConfirmDelete() {
   try {
     useHelper.loadingConfirmDelete = true;
     const res = await api.delete(
-      `${useHelper.tempData.endpoint}/${useHelper.tempData.id}`,
+      `${useHelper.tempData.endpoint}/${useHelper.tempData._id}`,
       {
         params: {
           ...useHelper.pagination,

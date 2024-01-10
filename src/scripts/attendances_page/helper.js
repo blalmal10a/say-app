@@ -30,7 +30,7 @@ const attendances = reactive({
   save: onSubmitForm,
 });
 async function onSubmitForm(route, router) {
-  let id = route.params.id;
+  let id = route.params._id;
   let is_executive = route.query.executive ?? 0;
   attendances.loadingTable = true;
   attendances.loadingSubmitButton = true;

@@ -103,19 +103,19 @@ onBeforeMount(() => {
 
 }),
   onMounted(async () => {
-    if (route.params.id == 'add') {
+    if (route.params._id == 'add') {
       faith_promises.selecteDate = date.formatDate(new Date().setDate(1), 'YYYY-MM-DD');
       await faith_promises.create(route)
     }
     else
-      await faith_promises.update(route.params.id, route)
+      await faith_promises.update(route.params._id, route)
 
     // await faith_promises.getList()
   })
 
 function onRowClick(ev, data) {
   const selectedIndex = faith_promises.selectedList.findIndex(
-    (item) => item.id == data.id
+    (item) => item._id == data._id
   )
   if (selectedIndex >= 0)
     faith_promises.selectedList.splice(selectedIndex, 1)

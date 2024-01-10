@@ -26,10 +26,10 @@ async function onSubmitForm() {
 
   try {
     const res = await api.request({
-      url: designations.form.id
-        ? `designations/${designations.form.id}`
+      url: designations.form._id
+        ? `designations/${designations.form._id}`
         : `designations`,
-      method: designations.form.id ? "patch" : "post",
+      method: designations.form._id ? "patch" : "post",
       data: {
         ...designations.form,
       },

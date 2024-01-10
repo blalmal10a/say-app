@@ -25,8 +25,8 @@ async function onSubmitForm() {
 
   try {
     const res = await api.request({
-      url: users.form.id ? `users/${users.form.id}` : `users`,
-      method: users.form.id ? "patch" : "post",
+      url: users.form._id ? `users/${users.form._id}` : `users`,
+      method: users.form._id ? "patch" : "post",
       data: {
         ...users.form,
       },

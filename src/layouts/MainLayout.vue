@@ -13,21 +13,21 @@
           icon="menu"
           aria-label="Menu"
           @click="leftDrawerOpen = !leftDrawerOpen"
-          v-if="$route.meta?.requires_auth || auth.user?.id"
+          v-if="$route.meta?.requires_auth || auth.user?._id"
         />
         <q-btn
           flat
           :to="{
             name: 'login'
           }"
-          v-if="$route.name == 'home' && !auth.user?.id"
+          v-if="$route.name == 'home' && !auth.user?._id"
           label="Login"
         ></q-btn>
       </q-toolbar>
     </q-header>
 
     <q-drawer
-      v-if="$route.meta?.requires_auth || auth.user?.id"
+      v-if="$route.meta?.requires_auth || auth.user?._id"
       v-model="leftDrawerOpen"
       show-if-above
       bordered

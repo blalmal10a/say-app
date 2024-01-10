@@ -54,7 +54,7 @@
                   $router.push({
                     name: 'faith-promise-form',
                     params: {
-                      id: props.row.id
+                      id: props.row._id
                     }
                   })
 
@@ -116,7 +116,7 @@ onUnmounted(() => {
 
 function onRowClick(ev, data) {
   const selectedIndex = faith_promises.selectedList.findIndex(
-    (item) => item.id == data.id
+    (item) => item._id == data._id
   )
   if (selectedIndex >= 0)
     faith_promises.selectedList.splice(selectedIndex, 1)

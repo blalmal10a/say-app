@@ -91,17 +91,17 @@ onBeforeMount(() => {
 
 }),
   onMounted(async () => {
-    if (route.params.id == 'add')
+    if (route.params._id == 'add')
       await attendances.create(route)
     else
-      await attendances.update(route.params.id, route)
+      await attendances.update(route.params._id, route)
 
     // await attendances.getList()
   })
 
 function onRowClick(ev, data) {
   const selectedIndex = attendances.selectedList.findIndex(
-    (item) => item.id == data.id
+    (item) => item._id == data._id
   )
   if (selectedIndex >= 0)
     attendances.selectedList.splice(selectedIndex, 1)
