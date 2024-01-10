@@ -42,8 +42,7 @@ export default route(function (/* { store, ssrContext } */) {
 
     const token = localStorage.getItem("token");
     if (to.meta.requires_auth || token) {
-      if (auth.user?._id && false) {
-        // authenticated
+      if (auth.user?._id) {
         authenticated(to, next);
       } else {
         await auth.getUser();
