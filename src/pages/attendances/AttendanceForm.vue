@@ -18,7 +18,7 @@
       hide-pagination
       class="full-width"
       v-model:selected="attendances.selectedList"
-      key="id"
+      row-key="_id"
     >
       <template v-slot:top>
         <div class="full-width">

@@ -29,7 +29,7 @@
                   $router.push({
                     name: 'faith-promise-form',
                     params: {
-                      id: 'add',
+                      _id: 'add',
                     }
                   })
                 }"
@@ -54,7 +54,7 @@
                   $router.push({
                     name: 'faith-promise-form',
                     params: {
-                      id: props.row._id
+                      _id: props.row._id
                     }
                   })
 
