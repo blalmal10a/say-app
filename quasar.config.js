@@ -65,7 +65,8 @@ module.exports = configure(function (ctx) {
       env: {
         API_URL: ctx.dev //
           ? "http://localhost:24101/api"
-          : "/api/api",
+          : "https://saymizoram.vercel.app/api/api",
+        // : "/api/api",
       },
       // rawDefine: {}
       // ignorePublicFolder: true,
