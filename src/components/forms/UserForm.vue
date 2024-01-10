@@ -43,7 +43,7 @@
             label="Designation"
             hint=""
             option-label="name"
-            option-value="id"
+            option-value="_id"
           ></q-select>
 
 

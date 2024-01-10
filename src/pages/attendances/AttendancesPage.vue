@@ -48,7 +48,7 @@
                   $router.push({
                     name: 'attendance-form',
                     params: {
-                      id: 'add',
+                      _id: 'add',
                     }
                   })
                 }"
@@ -67,7 +67,7 @@
                   $router.push({
                     name: 'attendance-form',
                     params: {
-                      id: 'add',
+                      _id: 'add',
                     },
                     query: {
                       executive: 1
@@ -119,7 +119,7 @@
                     $router.push({
                       name: 'attendance-form',
                       params: {
-                        id: props.row._id
+                        _id: props.row._id
                       }
                     })
 

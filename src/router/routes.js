@@ -40,7 +40,7 @@ const routes = [
       },
       {
         name: "attendances-detail",
-        path: "attendances/:id",
+        path: "attendances/:_id",
         meta: {
           requires_auth: true,
         },
@@ -49,7 +49,7 @@ const routes = [
 
       {
         name: "attendance-form",
-        path: "attendances/form/:id",
+        path: "attendances/form/:_id",
         meta: {
           requires_auth: true,
         },
@@ -69,7 +69,7 @@ const routes = [
       },
       {
         name: "faith-promises-detail",
-        path: "faith-promises/:id",
+        path: "faith-promises/:_id",
         meta: {
           requires_auth: true,
         },
@@ -79,7 +79,7 @@ const routes = [
 
       {
         name: "faith-promise-form",
-        path: "faith-promises/form/:id",
+        path: "faith-promises/form/:_id",
         meta: {
           requires_auth: true,
         },
