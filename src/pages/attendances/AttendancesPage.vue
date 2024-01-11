@@ -123,7 +123,7 @@
                 <q-btn
                   v-close-popup
                   round
-                  @click="() => {
+                  @click.stop="() => {
                     $router.push({
                       name: 'attendance-form',
                       params: {
@@ -141,7 +141,7 @@
               <div class="col-auto">
                 <q-btn
                   round
-                  @click="() => {
+                  @click.stop="() => {
                     useHelper.tempData = { ...props.row }
                     useHelper.tempData.title = `attendence on ${props.row.date}`;
                     useHelper.tempData.endpoint = 'attendances'

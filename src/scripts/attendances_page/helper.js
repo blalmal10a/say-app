@@ -28,7 +28,23 @@ const attendances = reactive({
   getList: getList,
   reset: resetForm,
   save: onSubmitForm,
+  show: show,
 });
+
+async function show(route, router) {
+  try {
+    attendances.loadingTable = true;
+    const res = await api.get(`attendances/${route.params._id}`);
+    attendances.form = res.data;
+    console.log(res.data);
+    attendances.users = res.data.users ?? [];
+    attendances.is_executive = route.query.executive ? true : false;
+    attendances.loadingTable = false;
+  } catch (error) {
+    attendances.loadingTable = false;
+    Notify.create(error.response?.data?.message ?? error?.message);
+  }
+}
 async function onSubmitForm(route, router) {
   let id = route.params._id;
   let is_executive = route.query.executive ?? 0;
