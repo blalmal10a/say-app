@@ -81,7 +81,15 @@
 
       </template>
       <template v-slot:body="props">
-        <q-tr :props="props">
+        <q-tr
+          :props="props"
+          @click="$router.push({
+            name: 'attendance-detail',
+            params: {
+              _id: props.row._id
+            }
+          })"
+        >
           <!-- :class="{
             'bg-teal-2 text-black': props.row.tag == 'Activity'
 

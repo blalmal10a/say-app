@@ -39,12 +39,12 @@ const routes = [
         component: () => import("src/pages/attendances/AttendancesPage.vue"),
       },
       {
-        name: "attendances-detail",
+        name: "attendance-detail",
         path: "attendances/:_id",
         meta: {
           requires_auth: true,
         },
-        component: () => import("src/pages/attendances/AttendancesPage.vue"),
+        component: () => import("src/pages/attendances/AttendanceDetail.vue"),
       },
 
       {
