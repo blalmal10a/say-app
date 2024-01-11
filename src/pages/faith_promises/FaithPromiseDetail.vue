@@ -76,16 +76,63 @@
         </q-td>
 
       </template>
+      <template v-slot:no-data>
+        <q-td class="full-width">
+          <div
+            v-if="!faith_promises.loadingTable && faith_promises.users?.length == 0"
+            class="q-my-md text-center"
+            style="font-size: max(2vw, 17px);"
+          >
+
+            {{ date.formatDate(faith_promises.selecteDate, 'Do MMM, YYYY') }}
+            <br>
+            <div class="q-mt-md">
+              ALL PAID
+            </div>
+
+          </div>
+
+        </q-td>
+      </template>
     </q-table>
-    <div v-if="!faith_promises.loadingTable && faith_promises.users?.length == 0">
-      <h3 class="my-none text-center">
-        {{ date.formatDate(faith_promises.selecteDate, 'Do MMM, YYYY') }}
-        <br>
-        <div class="q-mt-md">
-          ALL PAID
-        </div>
-      </h3>
-    </div>
+
+    <q-markup-table
+      flat
+      square
+      bordered
+      class="q-mt-md"
+    >
+
+      <thead>
+        <tr>
+          <th
+            colspan="100%"
+            style="font-size: 17px; text-align: left;"
+          >
+            FAITH PROMISE PE TAWHTE
+          </th>
+        </tr>
+        <tr>
+          <th class="text-left">Name</th>
+          <th class="text-left">Amount</th>
+        </tr>
+      </thead>
+      <tbody>
+        <template
+          v-for="(item, index) in faith_promises.paid_list"
+          :key="index"
+        >
+          <q-tr>
+            <td>
+              {{ item.user?.name }}
+            </td>
+            <td>
+              {{ item.amount }}
+            </td>
+          </q-tr>
+        </template>
+      </tbody>
+    </q-markup-table>
 
 
     <confirm-delete @update-table="(data) => {

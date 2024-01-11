@@ -15,6 +15,7 @@ const faith_promises = reactive({
   users: [],
   all_members: [],
   selectedList: [],
+  paid_list: [],
   pagination: {
     descending: true,
     rowsPerPage: 15,
@@ -36,7 +37,8 @@ async function show(route, router) {
   try {
     faith_promises.loadingTable = true;
     const res = await api.get(`faith-promises/${route.params._id}`);
-    faith_promises.users = res.data.details;
+    faith_promises.users = res.data.pending;
+    faith_promises.paid_list = res.data.paid;
     faith_promises.loadingTable = false;
     faith_promises.selecteDate = res.data.month;
   } catch (error) {
