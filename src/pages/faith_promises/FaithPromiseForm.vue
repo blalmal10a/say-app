@@ -30,39 +30,41 @@
 
               </q-input>
             </div>
-            <div class="col-12 col-sm-6 col-md-4 row q-col-gutter-sm">
-              <div class="col">
-                <q-btn
-                  outline
-                  color="white"
-                  class="full-width"
-                  style="height: 40px"
-                >
-                  {{ date.formatDate(faith_promises.selecteDate, 'MMMM') }}
-                  <q-popup-proxy v-model="faith_promises.dateMenu">
-                    <q-date
-                      v-model="faith_promises.selecteDate"
-                      default-view="Months"
-                      mask="YYYY-MM-DD"
-                      @navigation="(ev) => {
-                        faith_promises.selecteDate = `${ev.year}-${ev.month < 10 ? `0${ev.month}` : ev.month}-01`
-                        faith_promises.dateMenu = false;
-                      }"
-                    >
-                    </q-date>
-                  </q-popup-proxy>
-                </q-btn>
-              </div>
-              <div class="col">
-                <q-select
-                  dense
-                  outlined
-                  v-model="faith_promises.payment_status"
-                  @update:model-value="faith_promises.onSelectPaymentFilter"
-                  :options="[
-                    'All', 'Paid', 'Pending'
-                  ]"
-                ></q-select>
+            <div class="col-12 col-sm-6 col-md-4">
+              <div class="row q-col-gutter-sm">
+                <div class="col">
+                  <q-btn
+                    outline
+                    color="white"
+                    class="full-width"
+                    style="height: 40px"
+                  >
+                    {{ date.formatDate(faith_promises.selecteDate, 'MMMM') }}
+                    <q-popup-proxy v-model="faith_promises.dateMenu">
+                      <q-date
+                        v-model="faith_promises.selecteDate"
+                        default-view="Months"
+                        mask="YYYY-MM-DD"
+                        @navigation="(ev) => {
+                          faith_promises.selecteDate = `${ev.year}-${ev.month < 10 ? `0${ev.month}` : ev.month}-01`
+                          faith_promises.dateMenu = false;
+                        }"
+                      >
+                      </q-date>
+                    </q-popup-proxy>
+                  </q-btn>
+                </div>
+                <div class="col">
+                  <q-select
+                    dense
+                    outlined
+                    v-model="faith_promises.payment_status"
+                    @update:model-value="faith_promises.onSelectPaymentFilter"
+                    :options="[
+                      'All', 'Paid', 'Pending'
+                    ]"
+                  ></q-select>
+                </div>
               </div>
 
             </div>
