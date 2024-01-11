@@ -9,9 +9,11 @@ const faith_promises = reactive({
   loadingTable: false,
   loadingSubmitButton: false,
   is_executive: false,
+  payment_status: "All",
   selectedTag: "Fellowship",
   list: [],
   users: [],
+  all_members: [],
   selectedList: [],
   pagination: {
     descending: true,
@@ -27,7 +29,21 @@ const faith_promises = reactive({
   getList: getList,
   reset: resetForm,
   save: onSubmitForm,
+  onSelectPaymentFilter,
 });
+
+function onSelectPaymentFilter(data) {
+  if (data == "All") faith_promises.users = [...faith_promises.all_members];
+  else if (data == "Pending") {
+    faith_promises.users = faith_promises.all_members.filter((user) => {
+      if (user.amount < 1) return user;
+    });
+  } else if (data == "Paid") {
+    faith_promises.users = faith_promises.all_members.filter((user) => {
+      if (user.amount >= 1) return user;
+    });
+  }
+}
 async function onSubmitForm(route, router) {
   let id = route.params._id;
 
@@ -47,7 +63,7 @@ async function onSubmitForm(route, router) {
       },
     });
 
-    faith_promises.list = res.data.data;
+    faith_promises.list = [...res.data.data];
     faith_promises.pagination.rowsNumber = res.data.total;
     faith_promises.showAddEditForm = false;
     router.push({
@@ -138,6 +154,7 @@ async function getUsersForFaithPromise(route) {
     );
     faith_promises.users = res.data ?? [];
 
+    faith_promises.all_members = [...res.data];
     faith_promises.is_executive = route.query.executive ? true : false;
   } catch (error) {
     console.error(error.message);
@@ -150,6 +167,7 @@ async function getUsersForEditFaithPromise(id) {
     const res = await api.get(`faith-promises/${id}/edit`);
 
     faith_promises.users = res.data.details ?? [];
+    faith_promises.all_members = [...res.data.details];
 
     // faith_promises.is_executive = route.query.executive ? true : false;
     // faith_promises.users = res.data.users ?? [];

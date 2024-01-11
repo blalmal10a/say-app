@@ -68,13 +68,13 @@ const routes = [
           import("src/pages/faith_promises/FaithPromisePage.vue"),
       },
       {
-        name: "faith-promises-detail",
+        name: "faith-promise-detail",
         path: "faith-promises/:_id",
         meta: {
           requires_auth: true,
         },
         component: () =>
-          import("src/pages/faith_promises/FaithPromisePage.vue"),
+          import("src/pages/faith_promises/FaithPromiseDetail.vue"),
       },
 
       {
