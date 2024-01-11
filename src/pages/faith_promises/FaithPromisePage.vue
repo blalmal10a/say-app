@@ -7,6 +7,12 @@
       :loading="faith_promises.loadingTable"
       v-model:pagination="faith_promises.pagination"
       @request="faith_promises.getList"
+      @row-click="(ev, row) => $router.push({
+        name: 'faith-promise-detail',
+        params: {
+          _id: row._id
+        }
+      })"
       square
       flat
       bordered
@@ -50,7 +56,7 @@
               <q-btn
                 v-close-popup
                 round
-                @click="() => {
+                @click.stop="() => {
                   $router.push({
                     name: 'faith-promise-form',
                     params: {

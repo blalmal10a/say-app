@@ -13,7 +13,7 @@ const auth = reactive({
 async function getUser() {
   try {
     const res = await api.get("auth/user");
-    console.log(res.data);
+
     auth.user = res.data.user;
     return res.data;
   } catch (error) {

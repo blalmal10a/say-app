@@ -54,7 +54,7 @@
                     </q-popup-proxy>
                   </q-btn>
                 </div>
-                <div class="col">
+                <!-- <div class="col">
                   <q-select
                     dense
                     outlined
@@ -64,7 +64,7 @@
                       'All', 'Paid', 'Pending'
                     ]"
                   ></q-select>
-                </div>
+                </div> -->
               </div>
 
             </div>

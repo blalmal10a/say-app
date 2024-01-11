@@ -4,7 +4,7 @@
     <q-header class="custom-header">
       <q-toolbar>
         <q-toolbar-title>
-          Salvation Army Youth
+          <span @click="$router.back()">Salvation Army Youth</span>
         </q-toolbar-title>
         <q-btn
           flat

@@ -30,8 +30,20 @@ const faith_promises = reactive({
   reset: resetForm,
   save: onSubmitForm,
   onSelectPaymentFilter,
+  show: show,
 });
-
+async function show(route, router) {
+  try {
+    faith_promises.loadingTable = true;
+    const res = await api.get(`faith-promises/${route.params._id}`);
+    faith_promises.users = res.data.details;
+    faith_promises.loadingTable = false;
+    faith_promises.selecteDate = res.data.month;
+  } catch (error) {
+    faith_promises.loadingTable = false;
+    console.error(error.message);
+  }
+}
 function onSelectPaymentFilter(data) {
   if (data == "All") faith_promises.users = [...faith_promises.all_members];
   else if (data == "Pending") {
@@ -44,7 +56,7 @@ function onSelectPaymentFilter(data) {
     });
   }
 }
-async function onSubmitForm(route, router) {
+async function onSubmitForm(route, router, pending) {
   let id = route.params._id;
 
   let is_executive = route.query.executive ?? 0;
@@ -57,14 +69,15 @@ async function onSubmitForm(route, router) {
       data: {
         faith_promise_data: faith_promises.users,
         month: faith_promises.selecteDate,
+        pending,
       },
       params: {
         ...faith_promises.pagination,
       },
     });
 
-    faith_promises.list = [...res.data.data];
-    faith_promises.pagination.rowsNumber = res.data.total;
+    // faith_promises.list = [...res.data.data];
+    // faith_promises.pagination.rowsNumber = res.data.total;
     faith_promises.showAddEditForm = false;
     router.push({
       name: "faith-promises",

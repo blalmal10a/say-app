@@ -53,7 +53,7 @@
             <div class="col-12 col-sm-6 col-md-4">
               <q-btn
                 class="full-width"
-                @click="faith_promises.save($route, $router)"
+                @click="faith_promises.save($route, $router, true)"
                 label="save"
                 color="primary"
               ></q-btn>
@@ -77,6 +77,15 @@
 
       </template>
     </q-table>
+    <div v-if="!faith_promises.loadingTable && faith_promises.users?.length == 0">
+      <h3 class="my-none text-center">
+        {{ date.formatDate(faith_promises.selecteDate, 'Do MMM, YYYY') }}
+        <br>
+        <div class="q-mt-md">
+          ALL PAID
+        </div>
+      </h3>
+    </div>
 
 
     <confirm-delete @update-table="(data) => {
@@ -103,14 +112,8 @@ onBeforeMount(() => {
 
 }),
   onMounted(async () => {
-    if (route.params._id == 'add') {
-      faith_promises.selecteDate = date.formatDate(new Date().setDate(1), 'YYYY-MM-DD');
-      await faith_promises.create(route)
-    }
-    else
-      await faith_promises.update(route.params._id, route)
+    faith_promises.show(route, route)
 
-    // await faith_promises.getList()
   })
 
 function onRowClick(ev, data) {

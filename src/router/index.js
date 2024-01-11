@@ -53,8 +53,6 @@ export default route(function (/* { store, ssrContext } */) {
           next({ name: "login" });
         }
       }
-
-      next();
     } else {
       next();
     }
