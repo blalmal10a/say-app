@@ -92,7 +92,7 @@ function initForm() {
     name: "",
     phone: "",
     corp: null,
-    designations: [],
+    designations: ["Member"],
   };
 }
 function resetForm() {
@@ -101,6 +101,7 @@ function resetForm() {
     name: "",
     phone: "",
     corp: null,
+    designations: ["Member"],
   };
 }
 
