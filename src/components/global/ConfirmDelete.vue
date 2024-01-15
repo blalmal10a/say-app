@@ -46,19 +46,20 @@
 <script setup>
 import { onMounted } from 'vue';
 import { useHelper } from '../../scripts/global/helper';
+import { useQuasar } from 'quasar';
 
 
 const emit = defineEmits(['update-table'])
-
+const q = useQuasar();
 async function onSubmitConfirmDelete() {
   try {
     useHelper.loadingConfirmDelete = true;
     const data = await useHelper.onConfirmDelete()
     emit('update-table', data)
-    loadingConfirmDelete = false;
+    useHelper.loadingConfirmDelete = false;
   } catch (error) {
+    q.notify(error.response?.data?.message ?? error?.message)
     console.log('error: ', error.message)
-
   }
 }
 </script>
