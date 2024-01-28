@@ -41,6 +41,29 @@
             </div>
             <div class="col-12 col-sm-6 col-md-4">
               <q-btn
+                no-caps
+                class="full-width"
+                :label="date.formatDate(attendances.selecteDate, 'Do MMM, YYYY')"
+                color="primary"
+              >
+                <q-menu
+                  ref="date_menu_ref"
+                  fit
+                >
+                  <div class="row justify-center">
+                    <q-date
+                      mask="YYYY-MM-DD"
+                      flat
+                      v-model="attendances.selecteDate"
+                      minimal
+                      @update:model-value="$refs.date_menu_ref.hide()"
+                    />
+                  </div>
+                </q-menu>
+              </q-btn>
+            </div>
+            <div class="col-12 col-sm-6 col-md-4">
+              <q-btn
                 class="full-width"
                 @click="attendances.save($route, $router)"
                 label="save"
@@ -91,8 +114,10 @@ onBeforeMount(() => {
 
 }),
   onMounted(async () => {
-    if (route.params._id == 'add')
+    if (route.params._id == 'add') {
       await attendances.create(route)
+      attendances.selecteDate = date.formatDate(new Date(), 'YYYY-MM-DD')
+    }
     else
       await attendances.update(route.params._id, route)
 
