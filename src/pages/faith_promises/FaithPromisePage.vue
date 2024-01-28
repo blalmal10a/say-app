@@ -50,7 +50,7 @@
           auto-width
           :props="props"
         >
-          <div class="row q-col-gutter-sm">
+          <div class="row q-col-gutter-sm no-wrap">
             <!-- style="min-width: 100px;" -->
             <div class="col-auto">
               <q-btn
@@ -71,13 +71,11 @@
                 icon="edit"
               ></q-btn>
             </div>
-            <div
-              class="col-auto"
-              v-if="false"
-            >
+            <div class="col-auto">
               <q-btn
                 round
-                @click="() => {
+                @click="(ev) => {
+                  ev.stopPropagation()
                   useHelper.tempData = { ...props.row }
                   useHelper.tempData.title = `attendence on ${props.row.date}`;
                   useHelper.tempData.endpoint = 'faith-promises'
