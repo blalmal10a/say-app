@@ -20,6 +20,7 @@
       <q-card-section>
         <q-form @submit="users.add">
           <q-input
+            outlined
             autofocus
             v-model="users.form.name"
             type="text"
@@ -27,12 +28,19 @@
             :rules="[val => !!val || 'Name is required']"
           />
           <q-input
+            outlined
             v-model="users.form.phone"
             type="text"
             label="Phone"
-            :rules="[val => !!val || 'Phone is required']"
+            hint=""
           />
-
+          <q-input
+            outlined
+            v-model="users.form.bial"
+            type="text"
+            label="Bial"
+            hint=""
+          />
           <q-select
             outlined
             emit-value
@@ -48,6 +56,7 @@
 
 
           <!-- <q-input
+            outlined
           v-model="users.form.house_no"
           type="text"
           label="House No."
