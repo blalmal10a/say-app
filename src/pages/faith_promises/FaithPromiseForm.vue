@@ -15,7 +15,7 @@
       :columns="faith_promises.form_columns"
       :rows-per-page-options="[0]"
       hide-pagination
-      class="full-width"
+      class="full-width q-mb-xl"
       key="id"
     >
       <template v-slot:top>
@@ -92,29 +92,27 @@
 
 
     </q-table>
-    <!-- <div style="position: sticky; bottom:0;">
-      <q-btn
-        class="full-width"
-        @click="faith_promises.save($route, $router)"
-        label="save"
-        color="primary"
-      ></q-btn>
-    </div> -->
 
     <q-page-sticky
       expand
       position="bottom"
-      class="q-px-md"
+      :class="{
+        'q-px-xs': $q.screen.lt.sm,
+        'q-px-md': $q.screen.gt.xs && $q.screen.lt.lg,
+        'q-px-lg': !$q.screen.lt.lg,
+      }"
       style="border-top: 1px solid #aaa;"
     >
 
-      <div class="q-py-xs bg-dark col-12 row justify-end">
-        <q-btn
-          class="full-width"
-          @click="faith_promises.save($route, $router)"
-          label="save"
-          color="primary"
-        ></q-btn>
+      <div class="q-py-md q-px-xs bg-dark col-12 row justify-end">
+        <div class="col-12 col-sm-6 col-md-4">
+          <q-btn
+            class="full-width"
+            @click="faith_promises.save($route, $router)"
+            label="save"
+            color="primary"
+          ></q-btn>
+        </div>
       </div>
     </q-page-sticky>
 
