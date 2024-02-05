@@ -161,24 +161,30 @@ function resetForm() {
 }
 async function getUsersForAttendance(route) {
   try {
+    attendances.loadingTable = true;
     const res = await api.get(
       `attendances/create?executive=${route.query.executive ?? 0}`
     );
     attendances.users = res.data ?? [];
 
     attendances.is_executive = route.query.executive ? true : false;
+    attendances.loadingTable = false;
   } catch (error) {
+    attendances.loadingTable = false;
     console.error(error.message);
     Notify.create(error.response?.data?.message ?? error?.message);
   }
 }
 async function getUsersForEditAttendance(id) {
   try {
+    attendances.loadingTable = true;
     const res = await api.get(`attendances/${id}/edit`);
     attendances.users = res.data.users ?? [];
     attendances.selectedList = res.data.attend_list ?? [];
     attendances.is_executive = res.data.is_executive;
+    attendances.loadingTable = false;
   } catch (error) {
+    attendances.loadingTable = false;
     console.error(error.message);
     Notify.create(error.response?.data?.message ?? error?.message);
   }

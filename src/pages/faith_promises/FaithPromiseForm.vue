@@ -2,6 +2,7 @@
   <q-page
     class=""
     padding
+    style="position: relative;"
   >
     <q-table
       ref="tableRef"
@@ -68,14 +69,7 @@
               </div>
 
             </div>
-            <div class="col-12 col-sm-6 col-md-4">
-              <q-btn
-                class="full-width"
-                @click="faith_promises.save($route, $router)"
-                label="save"
-                color="primary"
-              ></q-btn>
-            </div>
+
           </div>
         </div>
       </template>
@@ -94,8 +88,35 @@
         </q-td>
 
       </template>
-    </q-table>
 
+
+
+    </q-table>
+    <!-- <div style="position: sticky; bottom:0;">
+      <q-btn
+        class="full-width"
+        @click="faith_promises.save($route, $router)"
+        label="save"
+        color="primary"
+      ></q-btn>
+    </div> -->
+
+    <q-page-sticky
+      expand
+      position="bottom"
+      class="q-px-md"
+      style="border-top: 1px solid #aaa;"
+    >
+
+      <div class="q-py-xs bg-dark col-12 row justify-end">
+        <q-btn
+          class="full-width"
+          @click="faith_promises.save($route, $router)"
+          label="save"
+          color="primary"
+        ></q-btn>
+      </div>
+    </q-page-sticky>
 
     <confirm-delete @update-table="(data) => {
       faith_promises.list = data.data
