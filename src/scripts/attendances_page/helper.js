@@ -4,7 +4,7 @@ import { api } from "src/boot/axios";
 import { reactive } from "vue";
 
 const attendances = reactive({
-  selecteDate: undefined,
+  selectedDate: undefined,
   showAddEditForm: false,
   loadingTable: false,
   loadingSubmitButton: false,
@@ -57,7 +57,7 @@ async function onSubmitForm(route, router) {
       data: {
         attend_list: attendances.selectedList,
         tag: attendances.selectedTag,
-        date: attendances.selecteDate,
+        date: attendances.selectedDate,
         is_executive: attendances.is_executive,
       },
       params: {

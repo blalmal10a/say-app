@@ -40,14 +40,15 @@
                     class="full-width"
                     style="height: 40px"
                   >
-                    {{ date.formatDate(faith_promises.selecteDate, 'MMMM') }}
+                    {{ date.formatDate(faith_promises.selectedDate, 'MMMM') }}
                     <q-popup-proxy v-model="faith_promises.dateMenu">
                       <q-date
-                        v-model="faith_promises.selecteDate"
+                        v-model="faith_promises.selectedDate"
                         default-view="Months"
                         mask="YYYY-MM-DD"
                         @navigation="(ev) => {
-                          faith_promises.selecteDate = `${ev.year}-${ev.month < 10 ? `0${ev.month}` : ev.month}-01`
+                          console.log('navigate')
+                          faith_promises.selectedDate = `${ev.year}-${ev.month < 10 ? `0${ev.month}` : ev.month}-01`
                           faith_promises.dateMenu = false;
                         }"
                       >
@@ -55,19 +56,7 @@
                     </q-popup-proxy>
                   </q-btn>
                 </div>
-                <!-- <div class="col">
-                  <q-select
-                    dense
-                    outlined
-                    v-model="faith_promises.payment_status"
-                    @update:model-value="faith_promises.onSelectPaymentFilter"
-                    :options="[
-                      'All', 'Paid', 'Pending'
-                    ]"
-                  ></q-select>
-                </div> -->
               </div>
-
             </div>
 
           </div>
@@ -84,9 +73,9 @@
             style="min-width: max(100px, 30vw)"
             v-model="props.row.amount"
             label="₹"
+            @blur="faith_promises.onBlurAmount(props.row)"
           ></q-input>
         </q-td>
-
       </template>
 
 
@@ -120,6 +109,51 @@
       faith_promises.list = data.data
       faith_promises.pagination.rowsNumber = data.total
     }" />
+
+    <q-dialog
+      persistent
+      v-model="faith_promises.createDialog"
+    >
+
+      <q-card flat>
+        <q-toolbar class="bg-primary">
+          <q-toolbar-title>
+            <q-btn
+              flat
+              round
+              icon="home"
+              @click="() => {
+                $router.push({
+                  name: 'faith-promises'
+                })
+                faith_promises.createDialog = false;
+              }"
+            />
+            SELECT FAITH PROMISE MONTH
+          </q-toolbar-title>
+        </q-toolbar>
+        <q-card-section>
+
+          <div class="row q-col-gutter-sm">
+            <div
+              class="col-4"
+              v-for="(item, index) in monthNames"
+              :key="index"
+            >
+              <q-item
+                clickable
+                style="border-radius: 4px;"
+                @click="faith_promises.checkMonthExists(index, $router)"
+              >
+                <q-item-section class="text-center">
+                  {{ item }}
+                </q-item-section>
+              </q-item>
+            </div>
+          </div>
+        </q-card-section>
+      </q-card>
+    </q-dialog>
   </q-page>
 </template>
 <script setup>
@@ -137,12 +171,12 @@ onBeforeMount(() => {
   faith_promises.selectedList = [];
   const today = date.formatDate(new Date(), 'ddd')
   if (today == 'Mon') faith_promises.selectedTag = 'Monday'
-
 }),
   onMounted(async () => {
     if (route.params._id == 'add') {
-      faith_promises.selecteDate = date.formatDate(new Date().setDate(1), 'YYYY-MM-DD');
-      await faith_promises.create(route)
+      faith_promises.createDialog = true;
+      faith_promises.selectedDate = date.formatDate(new Date().setDate(1), 'YYYY-MM-DD');
+      // await faith_promises.create(route)
     }
     else
       await faith_promises.update(route.params._id, route)
@@ -159,4 +193,21 @@ function onRowClick(ev, data) {
   else
     faith_promises.selectedList.push(data)
 }
+
+
+const monthNames = [
+  "Jan", // January
+  "Feb", // February
+  "Mar", // March
+  "Apr", // April
+  "May", // May
+  "Jun", // June
+  "Jul", // July
+  "Aug", // August
+  "Sep", // September
+  "Oct", // October
+  "Nov", // November
+  "Dec", // December
+];
+
 </script>

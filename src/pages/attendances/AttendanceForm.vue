@@ -43,7 +43,7 @@
               <q-btn
                 no-caps
                 class="full-width"
-                :label="date.formatDate(attendances.selecteDate, 'Do MMM, YYYY')"
+                :label="date.formatDate(attendances.selectedDate, 'Do MMM, YYYY')"
                 color="primary"
               >
                 <q-menu
@@ -54,7 +54,7 @@
                     <q-date
                       mask="YYYY-MM-DD"
                       flat
-                      v-model="attendances.selecteDate"
+                      v-model="attendances.selectedDate"
                       minimal
                       @update:model-value="$refs.date_menu_ref.hide()"
                     />
@@ -116,7 +116,7 @@ onBeforeMount(() => {
   onMounted(async () => {
     if (route.params._id == 'add') {
       await attendances.create(route)
-      attendances.selecteDate = date.formatDate(new Date(), 'YYYY-MM-DD')
+      attendances.selectedDate = date.formatDate(new Date(), 'YYYY-MM-DD')
     }
     else
       await attendances.update(route.params._id, route)

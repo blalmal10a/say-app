@@ -14,7 +14,7 @@
       :columns="faith_promises.form_columns"
       :rows-per-page-options="[0]"
       hide-pagination
-      class="full-width"
+      class="full-width "
       key="id"
     >
       <template v-slot:top>
@@ -33,31 +33,32 @@
                 outline
                 color="white"
                 class="full-width"
+                @click="faith_promises.createDialog = true"
               >
-                {{ date.formatDate(faith_promises.selecteDate, 'MMMM') }}
-                <q-popup-proxy v-model="faith_promises.dateMenu">
+                {{ date.formatDate(faith_promises.selectedDate, 'MMMM') }}
+                <!-- <q-popup-proxy v-model="faith_promises.dateMenu">
                   <q-date
-                    v-model="faith_promises.selecteDate"
+                    v-model="faith_promises.selectedDate"
                     default-view="Months"
                     mask="YYYY-MM-DD"
                     @navigation="(ev) => {
-                      faith_promises.selecteDate = `${ev.year}-${ev.month < 10 ? `0${ev.month}` : ev.month}-01`
+                      faith_promises.selectedDate = `${ev.year}-${ev.month < 10 ? `0${ev.month}` : ev.month}-01`
                       faith_promises.dateMenu = false;
                     }"
                   >
                   </q-date>
-                </q-popup-proxy>
+                </q-popup-proxy> -->
               </q-btn>
 
             </div>
-            <div class="col-12 col-sm-6 col-md-4">
+            <!-- <div class="col-12 col-sm-6 col-md-4">
               <q-btn
                 class="full-width"
                 @click="faith_promises.save($route, $router, true)"
                 label="save"
                 color="primary"
               ></q-btn>
-            </div>
+            </div> -->
           </div>
         </div>
       </template>
@@ -67,6 +68,7 @@
           :props="props"
         >
           <q-input
+            @blur="faith_promises.onBlurAmount(props.row, $route)"
             type="number"
             dense
             style="min-width: max(100px, 30vw)"
@@ -84,7 +86,7 @@
             style="font-size: max(2vw, 17px);"
           >
 
-            {{ date.formatDate(faith_promises.selecteDate, 'Do MMM, YYYY') }}
+            {{ date.formatDate(faith_promises.selectedDate, 'Do MMM, YYYY') }}
             <br>
             <div class="q-mt-md">
               ALL PAID
@@ -101,6 +103,7 @@
       square
       bordered
       class="q-mt-md"
+      style="margin-bottom: 100px;"
     >
 
       <thead>
@@ -124,10 +127,21 @@
         >
           <q-tr>
             <td>
-              {{ item.user?.name }}
+              {{ item.name }}
             </td>
             <td>
-              {{ item.amount }}
+              <!-- {{ item.faith_promise_payments?.[0]?.amount }} -->
+              <q-input
+                @blur="faith_promises.onBlurAmount({ amount: item.faith_promise_payments?.[0]?.amount, _id: item._id, }, $route)"
+                type="number"
+                dense
+                style="min-width: max(100px, 30vw)"
+                v-if="!!item.faith_promise_payments?.[0]?.amount"
+                v-model="item.faith_promise_payments[0].amount"
+              ></q-input>
+              <div v-if="!item.faith_promise_payments?.[0]?.amount">
+                'N/A'
+              </div>
             </td>
           </q-tr>
         </template>
@@ -139,6 +153,81 @@
       faith_promises.list = data.data
       faith_promises.pagination.rowsNumber = data.total
     }" />
+
+
+
+    <q-dialog
+      persistent
+      v-model="faith_promises.createDialog"
+    >
+
+      <q-card flat>
+        <q-inner-loading
+          :showing="faith_promises.loadingTable"
+          style="z-index: 2;"
+        >
+          <q-spinner-gears
+            size="50px"
+            color="primary"
+          />
+        </q-inner-loading>
+        <q-toolbar class="bg-primary">
+          <q-toolbar-title>
+            SELECT FAITH PROMISE MONTH
+          </q-toolbar-title>
+          <q-btn
+            flat
+            round
+            icon="close"
+            v-close-popup
+          />
+        </q-toolbar>
+        <q-card-section>
+          <div class="row q-col-gutter-sm">
+            <div
+              class="col-4"
+              v-for="(item, index) in monthNames"
+              :key="index"
+            >
+              <q-item
+                :disable="faith_promises.loadingTable"
+                clickable
+                style="border-radius: 4px;"
+                @click="faith_promises.checkMonthExists(index, $router)"
+              >
+                <q-item-section class="text-center">
+                  {{ item }}
+                </q-item-section>
+              </q-item>
+            </div>
+          </div>
+        </q-card-section>
+      </q-card>
+    </q-dialog>
+
+    <q-page-sticky
+      expand
+      position="bottom"
+      :class="{
+        'q-px-xs': $q.screen.lt.sm,
+        'q-px-md': $q.screen.gt.xs && $q.screen.lt.lg,
+        'q-px-lg': !$q.screen.lt.lg,
+      }"
+      style="border-top: 1px solid #aaa;"
+    >
+
+      <div class="q-py-md q-px-xs bg-dark col-12 row justify-end">
+        <div class="col-12 col-sm-6 col-md-4">
+          <q-btn
+            :loading="faith_promises.loadingSubmitButton"
+            class="full-width"
+            @click="faith_promises.save($route, $router)"
+            :label="`calculate total (${faith_promises.detail?.total_amount ? `₹${faith_promises.detail?.total_amount}` : 'N/A'})`"
+            color="primary"
+          ></q-btn>
+        </div>
+      </div>
+    </q-page-sticky>
   </q-page>
 </template>
 <script setup>
@@ -158,9 +247,11 @@ onBeforeMount(() => {
   if (today == 'Mon') faith_promises.selectedTag = 'Monday'
 
 }),
+  onBeforeUnmount(() => {
+    faith_promises.save(route)
+  }),
   onMounted(async () => {
     faith_promises.show(route, route)
-
   })
 
 function onRowClick(ev, data) {
@@ -172,4 +263,20 @@ function onRowClick(ev, data) {
   else
     faith_promises.selectedList.push(data)
 }
+
+
+const monthNames = [
+  "Jan", // January
+  "Feb", // February
+  "Mar", // March
+  "Apr", // April
+  "May", // May
+  "Jun", // June
+  "Jul", // July
+  "Aug", // August
+  "Sep", // September
+  "Oct", // October
+  "Nov", // November
+  "Dec", // December
+];
 </script>

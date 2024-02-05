@@ -52,7 +52,7 @@
         >
           <div class="row q-col-gutter-sm no-wrap">
             <!-- style="min-width: 100px;" -->
-            <div class="col-auto">
+            <!-- <div class="col-auto">
               <q-btn
                 v-close-popup
                 round
@@ -64,13 +64,12 @@
                     }
                   })
 
-                  // faith_promises.showAddEditForm = true;
                 }"
                 color="accent"
                 size="12px"
                 icon="edit"
               ></q-btn>
-            </div>
+            </div> -->
             <div class="col-auto">
               <q-btn
                 round

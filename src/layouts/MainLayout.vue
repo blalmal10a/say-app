@@ -4,7 +4,14 @@
     <q-header class="custom-header">
       <q-toolbar>
         <q-toolbar-title>
-          <span @click="$router.back()">Salvation Army Youth</span>
+          <span @click="() => {
+            if ($route.meta.parent?.[0]) {
+              $router.push({
+                name: $route.meta.parent?.[0]
+              })
+            }
+          }">Salvation Army Youth</span>
+          <!-- <span @click="$router.back()">Salvation Army Youth</span> -->
         </q-toolbar-title>
         <q-btn
           flat

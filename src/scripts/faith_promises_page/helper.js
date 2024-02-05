@@ -4,7 +4,9 @@ import { api } from "src/boot/axios";
 import { reactive } from "vue";
 
 const faith_promises = reactive({
-  selecteDate: undefined,
+  detail: {},
+  createDialog: false,
+  selectedDate: undefined,
   showAddEditForm: false,
   loadingTable: false,
   loadingSubmitButton: false,
@@ -31,16 +33,57 @@ const faith_promises = reactive({
   reset: resetForm,
   save: onSubmitForm,
   onSelectPaymentFilter,
-  show: show,
+  show,
+  onBlurAmount,
+  checkMonthExists
 });
+
+async function checkMonthExists(index, router) {
+  try {
+    faith_promises.loadingTable = true;
+    faith_promises.selectedDate = date.formatDate((new Date()).setMonth(index, 1), 'YYYY-MM-DD')
+    const { data } = await api.get(`faith-promises/check-month-exists?date=${faith_promises.selectedDate}`)
+
+    router.push({
+      name: 'faith-promise-detail',
+      params: {
+        _id: data._id
+      }
+    })
+    const route = {
+      params: { ...data }
+    }
+    await faith_promises.show(route)
+    faith_promises.createDialog = false;
+
+  } catch (error) {
+    if (error.response?.status == 404) faith_promises.createDialog = false;
+    //
+  }
+}
+
+async function onBlurAmount(data, route) {
+
+  if (data.amount == '') return;
+
+  const payment = {
+    user_id: data._id,
+    amount: data.amount,
+    faith_promise_id: route.params?._id,
+  }
+  api.post('faith-promise-payments', payment);
+}
+
 async function show(route, router) {
   try {
     faith_promises.loadingTable = true;
     const res = await api.get(`faith-promises/${route.params._id}`);
+
+    faith_promises.detail = res.data;
     faith_promises.users = res.data.pending;
     faith_promises.paid_list = res.data.paid;
     faith_promises.loadingTable = false;
-    faith_promises.selecteDate = res.data.month;
+    faith_promises.selectedDate = res.data.month;
   } catch (error) {
     faith_promises.loadingTable = false;
     console.error(error.message);
@@ -59,7 +102,19 @@ function onSelectPaymentFilter(data) {
   }
 }
 async function onSubmitForm(route, router, pending) {
-  let id = route.params._id;
+  try {
+    let id = route.params._id ?? faith_promises.detail?._id;
+    faith_promises.loadingSubmitButton = true;
+    const res = await api.patch(`faith-promises/${id}`)
+
+    faith_promises.detail = res.data
+    faith_promises.loadingSubmitButton = false;
+  } catch (error) {
+    faith_promises.loadingSubmitButton = false;
+
+  }
+  return;
+
 
   let is_executive = route.query.executive ?? 0;
   faith_promises.loadingTable = true;
@@ -70,7 +125,7 @@ async function onSubmitForm(route, router, pending) {
       method: id != "add" ? "patch" : "post",
       data: {
         faith_promise_data: faith_promises.users,
-        month: faith_promises.selecteDate,
+        month: faith_promises.selectedDate,
         pending,
       },
       params: {
@@ -121,7 +176,7 @@ function faith_promiseColumns() {
       label: "Amount",
       name: "amount",
       align: "left",
-      field: (row) => row.total_amount,
+      field: (row) => row.total_amount ? `₹${row.total_amount}` : 'N/A',
     },
 
     {
@@ -191,7 +246,7 @@ async function getUsersForEditFaithPromise(id) {
     // faith_promises.users = res.data.users ?? [];
     // faith_promises.selectedList = res.data.attend_list ?? [];
     // faith_promises.is_executive = res.data.is_executive;
-    faith_promises.selecteDate = res.data.month;
+    faith_promises.selectedDate = res.data.month;
     faith_promises.loadingTable = false;
   } catch (error) {
     faith_promises.loadingTable = false;

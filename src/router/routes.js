@@ -42,6 +42,9 @@ const routes = [
         name: "attendance-detail",
         path: "attendances/:_id",
         meta: {
+          parent: [
+            'attendances'
+          ],
           requires_auth: true,
         },
         component: () => import("src/pages/attendances/AttendanceDetail.vue"),
@@ -51,6 +54,9 @@ const routes = [
         name: "attendance-form",
         path: "attendances/form/:_id",
         meta: {
+          parent: [
+            'attendances'
+          ],
           requires_auth: true,
         },
         component: () => import("src/pages/attendances/AttendanceForm.vue"),
@@ -71,6 +77,9 @@ const routes = [
         name: "faith-promise-detail",
         path: "faith-promises/:_id",
         meta: {
+          parent: [
+            'faith-promises'
+          ],
           requires_auth: true,
         },
         component: () =>
@@ -81,6 +90,9 @@ const routes = [
         name: "faith-promise-form",
         path: "faith-promises/form/:_id",
         meta: {
+          parent: [
+            'faith-promises'
+          ],
           requires_auth: true,
         },
         component: () =>
