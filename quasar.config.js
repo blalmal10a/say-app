@@ -64,8 +64,8 @@ module.exports = configure(function (ctx) {
       // analyze: true,
       env: {
         API_URL: ctx.dev //
-          ? "http://localhost:24101/api"
-          : "https://saymizoram.vercel.app/api/api",
+          ? "http://localhost:24101/v1"
+          : "https://saymizoram.vercel.app/v1",
         // : "/api/api",
       },
       // rawDefine: {}
