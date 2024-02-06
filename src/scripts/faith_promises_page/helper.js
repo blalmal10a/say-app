@@ -63,12 +63,11 @@ async function checkMonthExists(index, router) {
 }
 
 async function onBlurAmount(data, route) {
-
-  if (data.amount == '') return;
+  if (!data.amount) return;
 
   const payment = {
     user_id: data._id,
-    amount: data.amount,
+    amount: parseFloat(data.amount),
     faith_promise_id: route.params?._id,
   }
   api.post('faith-promise-payments', payment);
@@ -109,6 +108,9 @@ async function onSubmitForm(route, router, pending) {
 
     faith_promises.detail = res.data
     faith_promises.loadingSubmitButton = false;
+    router.push({
+      name: 'faith-promises'
+    })
   } catch (error) {
     faith_promises.loadingSubmitButton = false;
 

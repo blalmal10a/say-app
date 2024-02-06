@@ -136,12 +136,9 @@
                 type="number"
                 dense
                 style="min-width: max(100px, 30vw)"
-                v-if="!!item.faith_promise_payments?.[0]?.amount"
                 v-model="item.faith_promise_payments[0].amount"
               ></q-input>
-              <div v-if="!item.faith_promise_payments?.[0]?.amount">
-                'N/A'
-              </div>
+
             </td>
           </q-tr>
         </template>
@@ -222,7 +219,7 @@
             :loading="faith_promises.loadingSubmitButton"
             class="full-width"
             @click="faith_promises.save($route, $router)"
-            :label="`calculate total (${faith_promises.detail?.total_amount ? `₹${faith_promises.detail?.total_amount}` : 'N/A'})`"
+            :label="`save and back (${faith_promises.detail?.total_amount ? `₹${faith_promises.detail?.total_amount}` : 'N/A'})`"
             color="primary"
           ></q-btn>
         </div>
