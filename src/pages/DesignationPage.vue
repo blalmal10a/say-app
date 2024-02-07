@@ -16,7 +16,7 @@
     >
       <template v-slot:top>
         <div class="full-width row">
-          <div class="col">sdf</div>
+          <div class="col"></div>
           <div class=" col-auto">
             <q-btn
               rounded
