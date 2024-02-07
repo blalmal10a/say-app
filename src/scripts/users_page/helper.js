@@ -74,6 +74,13 @@ function userColumns() {
     },
 
     {
+      name: "bial",
+      label: "bial",
+      align: "left",
+      field: (row) => row.bial,
+    },
+
+    {
       name: "phone",
       label: "phone",
       align: "left",
