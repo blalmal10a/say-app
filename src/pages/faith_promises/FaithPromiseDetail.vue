@@ -129,7 +129,7 @@
             <td>
               {{ item.name }}
             </td>
-            <td>
+            <td auto-width>
               <!-- {{ item.faith_promise_payments?.[0]?.amount }} -->
               <q-input
                 @blur="faith_promises.onBlurAmount({ amount: item.faith_promise_payments?.[0]?.amount, _id: item._id, }, $route)"
@@ -138,7 +138,6 @@
                 style="min-width: max(100px, 30vw)"
                 v-model="item.faith_promise_payments[0].amount"
               ></q-input>
-
             </td>
           </q-tr>
         </template>
