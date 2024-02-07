@@ -6,6 +6,7 @@ import { reactive } from "vue";
 const attendances = reactive({
   selectedDate: undefined,
   showAddEditForm: false,
+  showActions: true,
   loadingTable: false,
   loadingSubmitButton: false,
   is_executive: false,

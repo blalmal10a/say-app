@@ -25,13 +25,18 @@
           <div class="row q-col-gutter-sm">
             <div class="col-12 col-sm-6 col-md-4">
               <q-input
+                @focus="attendances.showActions = false"
+                @blur="attendances.showActions = true"
                 dense
                 outlined
                 v-model="attendances.pagination.filter"
                 label="Search"
               />
             </div>
-            <div class="col-12 col-sm-6 col-md-4">
+            <div
+              class="col-12 col-sm-6 col-md-4"
+              v-if="attendances.showActions"
+            >
               <q-select
                 dense
                 outlined
@@ -39,7 +44,10 @@
                 v-model="attendances.selectedTag"
               ></q-select>
             </div>
-            <div class="col-12 col-sm-6 col-md-4">
+            <div
+              class="col-12 col-sm-6 col-md-4"
+              v-if="attendances.showActions"
+            >
               <q-btn
                 no-caps
                 class="full-width"
@@ -62,7 +70,10 @@
                 </q-menu>
               </q-btn>
             </div>
-            <div class="col-12 col-sm-6 col-md-4">
+            <div
+              class="col-12 col-sm-6 col-md-4"
+              v-if="attendances.showActions"
+            >
               <q-btn
                 class="full-width"
                 @click="attendances.save($route, $router)"
