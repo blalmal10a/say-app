@@ -124,6 +124,7 @@
                   v-close-popup
                   round
                   @click.stop="() => {
+                    attendances.selectedDate = props.row.date;
                     $router.push({
                       name: 'attendance-form',
                       params: {
