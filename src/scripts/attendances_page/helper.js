@@ -136,10 +136,10 @@ function attendanceFormColumns() {
       field: (row) => row.name,
     },
     {
-      label: "phone",
-      name: "phone",
+      label: "Bial",
+      name: "bial",
       align: "left",
-      field: (row) => row.phone,
+      field: (row) => row.bial,
     },
   ];
 }
