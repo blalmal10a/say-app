@@ -79,7 +79,10 @@
 import { users } from 'src/scripts/users_page/helper';
 import { designations } from 'src/scripts/designations_page/helper';
 import { onMounted } from 'vue';
-onMounted(() => {
-  designations.getList();
+onMounted(async () => {
+  await designations.getList();
+  const memDesig = designations.list.find(val => val.name?.toLowerCase() == 'member')
+  users.member_id = memDesig;
+
 })
 </script>

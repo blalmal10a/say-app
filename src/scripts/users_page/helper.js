@@ -3,6 +3,7 @@ import { api } from "src/boot/axios";
 import { reactive } from "vue";
 
 const users = reactive({
+  member_id: null,
   list: [],
   pagination: {
     rowsPerPage: 15,
@@ -92,7 +93,7 @@ function initForm() {
     name: "",
     phone: "",
     corp: null,
-    designations: ["Member"],
+    designations: [],
   };
 }
 function resetForm() {
@@ -101,7 +102,7 @@ function resetForm() {
     name: "",
     phone: "",
     corp: null,
-    designations: ["Member"],
+    designations: [users.member_id],
   };
 }
 

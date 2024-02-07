@@ -25,6 +25,7 @@
               title="Add User"
               @click="() => {
                 users.reset()
+
                 users.showAddEditForm = true
               }"
             ></q-btn>
