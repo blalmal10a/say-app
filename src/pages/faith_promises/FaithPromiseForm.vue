@@ -118,19 +118,21 @@
       <q-card flat>
         <q-toolbar class="bg-primary">
           <q-toolbar-title>
-            <q-btn
-              flat
-              round
-              icon="home"
-              @click="() => {
-                $router.push({
-                  name: 'faith-promises'
-                })
-                faith_promises.createDialog = false;
-              }"
-            />
+
             SELECT FAITH PROMISE MONTH
+
           </q-toolbar-title>
+          <q-btn
+            flat
+            round
+            icon="close"
+            @click="() => {
+              $router.push({
+                name: 'faith-promises'
+              })
+              faith_promises.createDialog = false;
+            }"
+          />
         </q-toolbar>
         <q-card-section>
 
