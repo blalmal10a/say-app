@@ -1,7 +1,7 @@
 <template>
   <q-layout view="lHh Lpr lFf">
     <!-- <q-header style="background: radial-gradient(100% 50% at bottom, transparent 50%, #012962 51%);height: 100px "> -->
-    <q-header class="custom-header">
+    <q-header class="bg-dark">
       <q-toolbar>
         <q-toolbar-title>
           <span @click="() => {
