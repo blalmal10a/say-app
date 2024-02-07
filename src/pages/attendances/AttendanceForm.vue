@@ -31,7 +31,18 @@
                 outlined
                 v-model="attendances.pagination.filter"
                 label="Search"
-              />
+              >
+                <template v-slot:append>
+                  <q-btn
+                    flat
+                    dense
+                    round
+                    @click="attendances.pagination.filter = ''"
+                    icon="close"
+                  ></q-btn>
+
+                </template>
+              </q-input>
             </div>
             <div
               class="col-12 col-sm-6 col-md-4"
